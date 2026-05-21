@@ -14,6 +14,6 @@ $BDD_base="testdb_<nom>";
 $BDD_host="localhost";
 $BDD_user="ndomain";
 $BDD_password="NDom1240408@"; // vide sous windows
-$BDD_base="B1";
+$BDD_base="FootTier";
 
 ?>
