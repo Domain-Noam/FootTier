@@ -18,6 +18,22 @@ function verifUserBdd($login,$passe)
   // on aurait du utiliser SQLSelect
 }
 
+function verifUserBddHash($login, $passe){
+	//Vérifie l'identité via bcrypt (algorithme de hashage qui stocke des mots de passe de façon sécurisée) : on récupère le hash stocké puis password_verify()
+	$SQL = "SELECT id, pass FROM users WHERE pseudo='$login';";
+	$resultat = SQLSelect($SQL);
+
+	if(!$resultat){
+    	return false;
+	}
+
+	$resultat = parcoursRs($resultat);
+	if(password_verify($passe, $resultat[0]['pass'])){
+		return $resultat[0]['id'];  //on retourne l'id
+	}
+
+	return false; // Mauvais mot de passe
+}
 
 function isAdmin($idUser)
 {
