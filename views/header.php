@@ -16,7 +16,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <!-- **** H E A D **** -->
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Chat'2i</title>
+	<title>FootTier</title>
 	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
 	<!-- Liaisons aux fichiers css de Bootstrap -->
@@ -59,7 +59,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-bar"></span>
         </button>
-	<a class="navbar-brand" href="index.php?view=accueil"><img src="ressources/ig2i.jpeg" alt="Logo IG2I" />Chat'2i</a>
+	<a class="navbar-brand" href="index.php?view=accueil"><img src="ressources/ig2i.jpeg" alt="Logo IG2I" />FootTier</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">

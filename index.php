@@ -10,8 +10,8 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 */
 
 
-	include_once "libs/maLibUtils.php";
-	include_once "libs/maLibBootstrap.php";
+	include_once "librairies/maLibUtils.php";
+	include_once "librairies/maLibBootstrap.php";
 
 
 
@@ -33,27 +33,27 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 	// Le formulaire de recherche ainsi que le lien de connexion 
 	// si l'utilisateur n'est pas connecté 
 
-	include("templates/header.php");
+	include("views/header.php");
 
 	// En fonction de la vue à afficher, on appelle tel ou tel template
 	switch($view)
 	{		
 
 		case "accueil" : 
-			include("templates/accueil.php");
+			include("views/connexion.php");
 		break;
 
 
 		default : // si le template correspondant à l'argument existe, on l'affiche
-			if (file_exists("templates/$view.php"))
-				include("templates/$view.php");
+			if (file_exists("views/$view.php"))
+				include("views/$view.php");
 
 	}
 
 
 	// Dans tous les cas, on affiche le pied de page
 	// Qui contient les coordonnées de la personne si elle est connectée
-	include("templates/footer.php");
+	include("views/footer.php");
 
 
 	
