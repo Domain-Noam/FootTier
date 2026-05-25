@@ -48,7 +48,7 @@ session_start();
       case 'Inscription' :
 			$pseudo = valider("Pseudo");
     		$passe = valider("passe");
-        	if($idUser = valider('idUser', 'SESSION')){
+			if($pseudo && $passe){
          		creerUtilisateurHash($pseudo, $passe);
 			}
 			$addArgs = array("view"=>"connexion");

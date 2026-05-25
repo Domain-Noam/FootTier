@@ -29,7 +29,7 @@ $passe = valider("mot_de_passe", "COOKIE");
   </div>
   <button type="submit" name="action" value="Connexion" class="btn btn-default">Connexion</button>
 </form>
-<a href="../index.php?view=inscription" class="nv_compte">Nouveau compte ?</a>
+<a href="index.php?view=inscription" class="nv_compte">Nouveau compte ?</a>
 </p>
 
 </div>

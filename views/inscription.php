@@ -8,7 +8,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 ?>
 <div class="centre">
-  
+<br><br><br>
 <div class="page-header">
 	<h1>Inscription</h1>
 </div>
@@ -18,7 +18,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
  <form role="form" action="controleur.php">
   <div class="form-group">
     <label for="pseudo">Pseudo</label>
-    <input type="text" class="form-control" id="pseudo" name="login" value="" >
+    <input type="text" class="form-control" id="pseudo" name="Pseudo" value="" >
   </div>
   <div class="form-group">
     <label for="mdp">Mot de passe</label>
