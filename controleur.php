@@ -24,20 +24,14 @@ session_start();
 					// et on crée des variables de session si tout est OK
 					// Cf. maLibSecurisation
 					if (verifUser($pseudo,$passe)) {
-						// tout s'est bien passé, doit-on se souvenir de la personne ? 
-						if (valider("remember")) {
-							setcookie("pseudo",$pseudo , time()+60*60*24*30);
-							setcookie("passe",$password, time()+60*60*24*30);
-						} else {
-							setcookie("pseudo","", time()-3600);
-							setcookie("passe","", time()-3600);
-						}
-
+						setcookie("pseudo","", time()-3600);
+						setcookie("passe","", time()-3600);
+						$addArgs = array("view"=>"galerie");
+					}
+					else{
+						$addArgs = array("view"=>"connexion");
 					}	
 				}
-				$addArgs = array("view"=>"galerie");
-
-				// On redirigera vers la page index automatiquement
 			break;
 
 			case 'Logout' :

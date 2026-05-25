@@ -29,6 +29,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<![endif]-->
 
 	<script src="js/jquery.js"></script>
+	<script src="js/interaction.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	
 	<style>
@@ -63,15 +64,14 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-         	<!-- <li class="active"><a href="index.php?view=accueil">Accueil</a></li> -->
-		<?=mkHeadLink("Galerie","galerie",$view)?>
 		<?php
 		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 		if (!valider("connecte","SESSION")) {
 			echo mkHeadLink("Se connecter","connexion",$view); 
 			//echo "<li><a href=\"index.php?view=login\">Se connecter</a></li>";
 		} else {
-		  echo "Vas-y Adrien :)";
+			mkHeadLink("Galerie","galerie",$view);
+		  	echo "Vas-y Adrien :)";
 	  }
 		?>
         </ul>

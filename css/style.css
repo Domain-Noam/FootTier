@@ -117,6 +117,12 @@ code {
     letter-spacing: 1px; /*On décolle les lettres, ça rend mieux, surtout que c'est en majuscule*/
 }
 
+.centre .info:focus { /*Permet de régler le problème des bords rouges de Boostrap*/
+    outline: none;
+    box-shadow: none;
+    border-color: inherit; 
+}
+
 /*Pour le bouton blanc pour connexion et inscription*/
 .centre .bouton {
     background-color: #ffffff;
