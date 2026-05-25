@@ -1,19 +1,17 @@
 <?php
 
-// Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
-	header("Location:../index.php?view=login");
+	header("Location:../index.php?view=connexion");
 	die("");
 }
 
-// Chargement eventuel des données en cookies
-$login = valider("login", "COOKIE");
-$passe = valider("passe", "COOKIE"); 
-if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
+//Chargement eventuel des données en cookies
+$pseudo = valider("pseudo", "COOKIE");
+$passe = valider("mot_de_passe", "COOKIE"); 
 
 ?>
-
+<div class="centre">
 <div class="page-header">
 	<h1>Connexion</h1>
 </div>
@@ -22,21 +20,18 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 
  <form role="form" action="controleur.php">
   <div class="form-group">
-    <label for="email">Login</label>
-    <input type="text" class="form-control" id="email" name="login" value="<?php echo $login;?>" >
+    <label for="pseudo">Pseudo</label>
+    <input type="text" class="form-control" id="pseudo" name="Pseudo" value="<?php echo $pseudo;?>" >
   </div>
   <div class="form-group">
-    <label for="pwd">Passe</label>
-    <input type="password" class="form-control" id="pwd" name="passe" value="<?php echo $passe;?>">
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="remember" <?php echo $checked;?> >Se souvenir de moi</label>
+    <label for="mdp">Mot de passe</label>
+    <input type="password" class="form-control" id="mdp" name="passe" value="<?php echo $passe;?>">
   </div>
   <button type="submit" name="action" value="Connexion" class="btn btn-default">Connexion</button>
 </form>
-
+<a href="../index.php?view=inscription" class="nv_compte">Nouveau compte ?</a>
 </p>
 
-
+</div>
 
 

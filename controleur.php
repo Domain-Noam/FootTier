@@ -16,23 +16,21 @@ session_start();
 		{
 			
 			case 'Connexion' :
-				// On verifie la presence des champs login et passe
-				if ($login = valider("login"))
+				// On verifie la presence des champs pseudo et mot_de_passe
+				if ($pseudo = valider("Pseudo"))
 				if ($passe = valider("passe"))
 				{
 					// On verifie l'utilisateur, 
 					// et on crée des variables de session si tout est OK
 					// Cf. maLibSecurisation
-					if (verifUser($login,$passe)) {
+					if (verifUser($pseudo,$passe)) {
 						// tout s'est bien passé, doit-on se souvenir de la personne ? 
 						if (valider("remember")) {
-							setcookie("login",$login , time()+60*60*24*30);
+							setcookie("pseudo",$pseudo , time()+60*60*24*30);
 							setcookie("passe",$password, time()+60*60*24*30);
-							setcookie("remember",true, time()+60*60*24*30);
 						} else {
-							setcookie("login","", time()-3600);
+							setcookie("pseudo","", time()-3600);
 							setcookie("passe","", time()-3600);
-							setcookie("remember",false, time()-3600);
 						}
 
 					}	
@@ -47,55 +45,17 @@ session_start();
 				$addArgs = array();
 			break;
 
-      case 'Archiver' :
-        if (($idConv = valider('idConv')) &&
-            valider('admin', 'SESSION')) {
-          archiverConversation($idConv);
-        }
-		$addArgs = array("view"=>"conversations");
-      break;
+      case 'Inscription' :
+			$pseudo = valider("Pseudo");
+    		$passe = valider("passe");
+        	if($idUser = valider('idUser', 'SESSION')){
+         		creerUtilisateurHash($pseudo, $passe);
+			}
+			$addArgs = array("view"=>"connexion");
+		break;
 
-      case 'Reactiver' :
-        if (($idConv = valider('idConv')) &&
-            valider('admin', 'SESSION')) {
-          reactiverConversation($idConv);
-        }
-		$addArgs["view"] = "conversations";
-		$addArgs["idConv"] = $idConv;
-      break;
 
-	  case 'Supprimer' :
-        if (($idConv = valider('idConv')) &&
-            valider('admin', 'SESSION')) {
-          supprimerConversation($idConv);
-        }
-		$addArgs["view"] = "conversations";
-		// $addArgs["idConv"] = $idConv; //inutile
-      break;
-
-	  case 'Ajouter' :
-        if (($theme = valider('theme')) &&
-            valider('admin', 'SESSION')) {// OU sans &&, avec plutôt 2 if
-          if(trim($theme) != ""){ //On évite d'ajouter un thème vide
-            $idConv = creerConversation($theme);
-			$addArgs["idConv"] = $idConv;
-          }
-        }
-		$addArgs["view"] = "conversations";
-      break;
-
-	case 'Poster' :
-        if (($idConv = valider('idConv')) && $contenu = valider('contenu'))
-        if(valider('admin', 'SESSION'))
-		if($metaConv = getConversation($idConv))
-		if($metaConv["active"]){
-			enregistrerMessage($idConv, $_SESSION["idUser"], $contenu);
 		}
-		$addArgs["view"]="messages";
-		$addArgs["idConv"]=$idConv;
-      break;
-		}
-
 	}
 
 	// On redirige toujours vers la page index, mais on ne connait pas le répertoire de base

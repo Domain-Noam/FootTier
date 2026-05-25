@@ -21,7 +21,7 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
 function verifUser($login,$password)
 {
 	
-	$id = verifUserBdd($login,$password);
+	$id = verifUserBddHash($login,$password);
 
 	if (!$id) return false; 
 

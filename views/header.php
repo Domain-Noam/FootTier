@@ -68,7 +68,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		<?php
 		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 		if (!valider("connecte","SESSION")) {
-			echo mkHeadLink("Se connecter","login",$view); 
+			echo mkHeadLink("Se connecter","connexion",$view); 
 			//echo "<li><a href=\"index.php?view=login\">Se connecter</a></li>";
 		} else {
 		  echo mkHeadLink("Page d'administration","admin",$view); 

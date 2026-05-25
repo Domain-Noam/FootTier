@@ -46,3 +46,88 @@ body {
 code {
   font-size: 80%;
 }
+
+/*FIN STYLE POUR BOOSTRAP*/
+
+/*DÉBUT STYLE POUR NOS PAGES*/
+
+.centre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    /*box-sizing: border-box;*/
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.centre form {
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    /*Flexbox pour séparer les champs*/
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /*Gap gère l'espace entre chaque champ*/
+}
+
+.centre form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /*Permet de séparer uniformément les champs et le bouton*/
+    width: 100%;
+}
+
+/*Style des champs de saisie*/
+.centre .form-group {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.centre .form-control {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px; /*Rendre un peu les bords moins en pic*/
+    color: #ffffff !important;
+    padding: 22px 20px 22px 55px; /* Espace à gauche pour l'icône */
+    height: auto; /*auto pour s'adapter à la page*/
+    font-size: 13px;
+    /*letter-spacing: 1px;*/
+    width: 100%;
+    /*box-sizing: border-box;
+    transition: border-color 0.3s;*/
+}
+
+/*Pour le bouton blanc "CONNEXION"/"INSCRIPTION"*/
+.centre .btn-default {
+    background-color: #ffffff;
+    /*color: #5e5d7a;
+    border: none;*/
+    border-radius: 4px;
+    padding: 20px;
+    /*font-weight: 600;
+    font-size: 14px;*/
+    letter-spacing: 2px;
+    /*text-transform: uppercase;*/
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    /*transition: background-color 0.2s;*/
+}
+
+.centre .nv_compte {
+    display: block;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    text-decoration: none; /*Pour ne pas afficher le soulignement du lien*/
+    margin-top: 20px;
+}
+
+.centre .nv_compte:hover {
+    color: #ffffff;
+    text-decoration: underline;/*On réaffiche le soulignement pour montrer à l'utilisateur que c'est bien un lien*/
+}

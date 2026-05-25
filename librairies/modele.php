@@ -43,5 +43,15 @@ function isAdmin($idUser)
 }
 
 
+//Création de nouveaux utilisateurs
+function creerUtilisateurHash($pseudo, $passe){
+    //Hachage du mot de passe avec Bcrypt comme demandé
+    $hash = password_hash($passe, PASSWORD_BCRYPT);
+
+    //(est_admin est à 0 par défaut, NOW() met la date actuelle)
+    $sql = "INSERT INTO utilisateur (pseudo, mot_de_passe, est_admin, date_inscription) VALUES ('$pseudo', '$hash', 0, NOW())";
+    
+    return SQLInsert($sql);
+}
 
 ?>
