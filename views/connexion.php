@@ -23,7 +23,7 @@ $passe = valider("mot_de_passe", "COOKIE");
     <label for="mdp">Mot de passe</label>
     <input type="password" class="info" id="mdp" name="passe" placeholder="MOT DE PASSE" value="<?php echo $passe;?>">
   </div>
-  <button type="submit" name="action" value="Connexion" class="bouton">Connexion</button>
+  <button type="submit" name="action" value="Connexion" class="bouton">CONNEXION</button>
 </form>
 <a href="index.php?view=inscription" class="nv_compte">Nouveau compte ?</a>
 

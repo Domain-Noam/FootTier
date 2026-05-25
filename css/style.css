@@ -2,47 +2,58 @@
 
 /*POUR BOOSTRAP*/
 
-html, body {
+/* Sticky footer styles
+Style inspiré de http://www.bootstrapzero.com/bootstrap-template/sticky-footer 
+-------------------------------------------------- */
+
+html,
+body {
   height: 100%;
-  background-color: #5e5d7a;
+  /* The html and body elements cannot have any padding or margin. */
 }
 
+/* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
   height: auto !important;
   height: 100%;
+  /* Negative indent footer by its height */
   margin: 0 auto -60px;
+  /* Pad bottom by footer height */
   padding: 0 0 60px;
-  background-color: #5e5d7a; /*Pour éviter le fond blanc du container Bootstrap, qu'il met par défaut*/
+  background-color: #5e5d7a;
 }
 
+/* Set the fixed height of the footer here */
 #footer {
   height: 60px;
   background-color: #f5f5f5;
 }
 
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
 #wrap > .container {
   padding: 60px 15px 0;
-  background-color: #5e5d7a; /* Bootstrap met parfois un fond blanc ici, donc nous l'avons passé à la couleur souhaitée */
+  background-color: #5e5d7a;
+}
+.container .credit {
+  margin: 20px 0;
 }
 
-.container .credit { 
-  margin: 20px 0; 
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-#footer > .container { 
-  padding-left: 15px; padding-right: 15px; 
-}
-
-code { 
-  font-size: 80%; 
+code {
+  font-size: 80%;
 }
 
 /*PAGES CONNEXION ET INSCRIPTION*/
-
-body{
-    background-color: #5e5d7a !important;
-}
 
 /*Formulaire mis au centre*/
 .centre {
@@ -51,27 +62,22 @@ body{
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #5e5d7a;
-    min-height: calc(100vh - 120px); /*header + footer, pour les séparer*/
-    color: #ffffff;
 }
 
 /*Les titres : Connexion / Inscription */
 .centre h1 {
-    color: #ffffff !important;
-    font-size: 30px;
+    color: #ffffff;
+    font-size: 35px;
     margin-bottom: 30px;
     margin-top: 0;
-    letter-spacing: 2px;
-    font-weight: 400;
+    letter-spacing: 1px; /*Pour décoller les lettres car ça nous paraissait pas très beau*/
     text-align: center;
 }
 
 /*Le formulaire lui-même, pour séparer les champs*/
 .centre form {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px; 
     display: flex;
     flex-direction: column; /*Aligne verticalement*/
     gap: 16px; /*Permet la séparation des champs*/
@@ -85,75 +91,64 @@ body{
     width: 100%;
 }
 
-/*Pour les labels (!important sinon cela ne fonctionnait pas*/
+/*Pour les labels*/
 .centre .formPseudo label {
-    color: rgba(255, 255, 255, 0.75) !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    letter-spacing: 1px !important;
-    margin-bottom: 0 !important;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 0;
 }
 
-/*Pour les champs de saisie que l'on voulait rendre transparents, on a également utilisé !important pour la même raison*/
+/*Pour les champs de saisie que l'on voulait rendre transparents*/
 .centre .info {
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 4px !important;
-    color: #ffffff !important;
-    padding: 14px 20px !important; 
-    height: auto !important;
-    font-size: 13px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    transition: border-color 0.2s;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4); /*Pour voir les bords du champ*/
+    border-radius: 4px; /*Pour que les bords ne soient pas en pic*/
+    padding: 14px 20px; 
+    height: auto;
+    font-size: 13px;
+    width: 100%; /*Pour prendre toute la largeur disponible*/
 }
-
-/*.centre .info:focus {
-    border-color: rgba(255, 255, 255, 0.9) !important;
-    outline: none !important;
-    box-shadow: none !important;
-}*/
 
 /*Pour les placeholder car on les veux en gris*/
 .centre .info::placeholder {
-    color: rgba(255, 255, 255, 0.4) !important;
-    /*letter-spacing: 1px;*/
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px; /*On décolle les lettres, ça rend mieux, surtout que c'est en majuscule*/
 }
 
-/*Pour le bouton blanc pour connexion et inscription, tout mis en important pour les mêmes raisons*/
+/*Pour le bouton blanc pour connexion et inscription*/
 .centre .bouton {
-    background-color: #ffffff !important;
-    color: #5e5d7a !important;
-    border: none !important;
-    border-radius: 4px !important;
-    padding: 16px !important;
-    font-weight: bold !important;
-    font-size: 13px !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    cursor: pointer !important;
-    margin-top: 8px !important;
-    width: 100% !important;
-    transition: background-color 0.2s !important;
+    background-color: #ffffff;
+    color: #5e5d7a; /*Le texte sur le bouton aura une couleur en lien avec le fond*/
+    border: none; /*On retire les bords, le design rend mieux*/
+    border-radius: 4px;
+    padding: 16px;
+    font-weight: bold; /*On met en gras*/
+    font-size: 13px;
+    letter-spacing: 1px; /*Pour la même raison, on trouvait que coller cela faisait bizarre pour les lettres*/
+    cursor: pointer; /*On affiche la main*/
+    margin-top: 25px; /*Pour un écart avec les champs, comme dans nos mockups*/
+    width: 100%;
 }
 
-/*.centre .bouton:hover {
-    background-color: #eeedf3 !important;
-}*/
+.centre .bouton:hover {
+    background-color: #f1cbc9; /*On modifie légèrement la couleur du bouton au passage de la souris pour l'esthétique*/
+}
 
 /*Pour le lien "Nouveau compte ?" dans connexion.php*/
 .centre .nv_compte {
     display: block;
     text-align: right;
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: rgba(248, 243, 243, 0.6);
     font-size: 13px;
     text-decoration: none; /*Pour respecter nos mockups, on enlève le soulignement*/
     margin-top: 12px;
     width: 100%;
-    max-width: 400px;
+    max-width: 400px; /*Cela permet d'aligner là où on souhaite, pour éviter que le texte parte trop vers la droite*/
 }
 
 .centre .nv_compte:hover {
-    color: #ffffff !important;
-    text-decoration: underline !important; /*On remet le soulignement au moment où l'utilisateur passe dessus pour lui montrer que c'est bien un lien*/
+    color: #ffffff; /*On modifie légèrement la couleur pour l'esthétique et pour que l'utilisateur voit bien*/
+    text-decoration: underline; /*On remet le soulignement au moment où l'utilisateur passe dessus pour lui montrer que c'est bien un lien*/
 }

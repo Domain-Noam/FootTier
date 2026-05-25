@@ -35,7 +35,7 @@ session_start();
 
 					}	
 				}
-				$addArgs = array();
+				$addArgs = array("view"=>"galerie");
 
 				// On redirigera vers la page index automatiquement
 			break;

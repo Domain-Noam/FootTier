@@ -19,7 +19,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
     <label for="mdp">Mot de passe</label>
     <input type="password" class="info" id="mdp" name="passe" placeholder="MOT DE PASSE" value="">
   </div>
-  <button type="submit" name="action" value="Inscription" class="bouton">Inscription</button>
+  <button type="submit" name="action" value="Inscription" class="bouton">INSCRIPTION</button>
 </form>
 
 </div>

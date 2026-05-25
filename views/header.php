@@ -59,12 +59,12 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-bar"></span>
         </button>
-	<a class="navbar-brand" href="index.php?view=accueil"><img src="ressources/ig2i.jpeg" alt="Logo FootTier" />FootTier</a>
+	<a class="navbar-brand" href="index.php?view=galerie"><img src="ressources/ig2i.jpeg" alt="Logo FootTier" />FootTier</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
          	<!-- <li class="active"><a href="index.php?view=accueil">Accueil</a></li> -->
-		<?=mkHeadLink("Accueil","accueil",$view)?>
+		<?=mkHeadLink("Galerie","galerie",$view)?>
 		<?php
 		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 		if (!valider("connecte","SESSION")) {
