@@ -11,7 +11,7 @@ function verifUserBdd($login,$passe)
   // renvoie faux si user inconnu
   // renvoie l'id de l'utilisateur si succès
 
-  $SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
+  $SQL="SELECT id_user FROM utilisateur WHERE pseudo='$login' AND mot_de_passe='$passe'";
 
   return SQLGetChamp($SQL);
   // si on avait besoin de plus d'un champ
@@ -20,7 +20,7 @@ function verifUserBdd($login,$passe)
 
 function verifUserBddHash($login, $passe){
 	//Vérifie l'identité via bcrypt (algorithme de hashage qui stocke des mots de passe de façon sécurisée) : on récupère le hash stocké puis password_verify()
-	$SQL = "SELECT id, pass FROM users WHERE pseudo='$login';";
+	$SQL = "SELECT id_user, mot_de_passe FROM utilisateur WHERE pseudo='$login';";
 	$resultat = SQLSelect($SQL);
 
 	if(!$resultat){
@@ -28,8 +28,8 @@ function verifUserBddHash($login, $passe){
 	}
 
 	$resultat = parcoursRs($resultat);
-	if(password_verify($passe, $resultat[0]['pass'])){
-		return $resultat[0]['id'];  //on retourne l'id
+	if(password_verify($passe, $resultat[0]['mot_de_passe'])){
+		return $resultat[0]['id_user'];  //on retourne l'id
 	}
 
 	return false; // Mauvais mot de passe
@@ -38,7 +38,7 @@ function verifUserBddHash($login, $passe){
 function isAdmin($idUser)
 {
   // vérifie si l'utilisateur est un administrateur
-  $SQL ="SELECT admin FROM users WHERE id='$idUser'";
+  $SQL ="SELECT est_admin FROM utilisateur WHERE id_user='$idUser'";
   return SQLGetChamp($SQL); 
 }
 

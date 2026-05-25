@@ -8,25 +8,18 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 ?>
 <div class="centre">
-<br><br><br>
-<div class="page-header">
 	<h1>Inscription</h1>
-</div>
-
-<p class="lead">
 
  <form role="form" action="controleur.php">
-  <div class="form-group">
+  <div class="formPseudo">
     <label for="pseudo">Pseudo</label>
-    <input type="text" class="form-control" id="pseudo" name="Pseudo" value="" >
+    <input type="text" class="info" id="pseudo" name="Pseudo" placeholder="NOM D'UTILISATEUR" value="" >
   </div>
-  <div class="form-group">
+  <div class="formPseudo">
     <label for="mdp">Mot de passe</label>
-    <input type="password" class="form-control" id="mdp" name="passe" value="">
+    <input type="password" class="info" id="mdp" name="passe" placeholder="MOT DE PASSE" value="">
   </div>
-  <button type="submit" name="action" value="Inscription" class="btn btn-default">Inscription</button>
+  <button type="submit" name="action" value="Inscription" class="bouton">Inscription</button>
 </form>
-
-</p>
 
 </div>
