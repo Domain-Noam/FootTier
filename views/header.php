@@ -1,93 +1,177 @@
 <?php
-
-// Si la page est appelée directement par son adresse, on redirige en passant pas la page index
+//si la page est appelée directement par son adresse, on redirige en passant par la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
 	header("Location:../index.php");
 	die("");
 }
-
-// Pose qq soucis avec certains serveurs...
-echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<!-- **** H E A D **** -->
+<!DOCTYPE html>
+<html lang="fr">
 <head>	
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
 	<title>FootTier</title>
-	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
-	<!-- Liaisons aux fichiers css de Bootstrap -->
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+	
 	<link href="css/style.css" rel="stylesheet" />
-	<!--[if lt IE 9]>
-	  <script src="js/html5shiv.js"></script>
-	  <script src="js/respond.min.js"></script>
-	<![endif]-->
 
 	<script src="js/jquery.js"></script>
-	<script src="js/interaction.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/interaction.js"></script>
 	
 	<style>
-	  .navbar-brand img {
-	    max-width: 50px;
-	    max-height: 30px;
-	    display: inline;
-	    margin-right: 10px;
-	  }
+        /* fond du site */
+        body {
+            background-color: #79808d; /* bleu-gris du fond */
+            margin-top: 0; /* enlève la marge par défaut tout en haut */
+            padding-top: 0;
+        }
+        
+        /* la pilule grise claire */
+        .pilule-entete {
+            background-color: #dedede;
+            border-radius: 50px;
+            padding: 15px 30px;
+            margin-top: 30px; /* Espace réduit entre le haut de l'écran et la pilule */
+            margin-bottom: 30px;
+            display: flex; /* Utilisation de Flexbox */
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* variantes de disposition Flexbox selon la vue connectée ou non */
+        .entete-centre {
+            justify-content: center;
+        }
+        .entete-espace {
+            justify-content: space-between;
+        }
+
+        /* logo + titre */
+        .section-marque {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .section-marque img {
+            width: 40px;
+            height: auto;
+        }
+        .section-marque h1 {
+            margin: 0 0 0 10px;
+            font-weight: bold;
+            font-size: 32px;
+            color: #2c166d; /* Violet foncé */
+        }
+        .section-marque:hover {
+            text-decoration: none;
+        }
+
+        /* boutons de navigation */
+        .boutons-nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .bouton-nav {
+            border: 2px solid #2c166d;
+            border-radius: 20px;
+            padding: 8px 20px;
+            color: #2c166d;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            background-color: transparent;
+            transition: all 0.2s;
+            line-height: 1.2;
+        }
+        .bouton-nav:hover, .bouton-nav:focus {
+            background-color: #2c166d;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* icône utilisateur à droite du footer */
+        .icone-utilisateur {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #2c166d;
+            cursor: pointer;
+        }
+
+        /* popup de déconnexion */
+        #popupUtilisateur {
+            display: none;
+            position: absolute;
+            right: 30px;
+            top: 80px;
+            background: white;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            z-index: 1000;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
 	</style>
-
 </head>
-<!-- **** F I N **** H E A D **** -->
 
-
-<!-- **** B O D Y **** -->
 <body>
-
-<!-- style inspiré de http://www.bootstrapzero.com/bootstrap-template/sticky-footer --> 
-
-<!-- Wrap all page content here -->
-<div id="wrap">
+<div id="enveloppe">
   
-  <!-- Fixed navbar -->
-  <div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-        </button>
-	<a class="navbar-brand" href="index.php?view=galerie"><img src="ressources/ig2i.jpeg" alt="Logo FootTier" />FootTier</a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-		<?php
-		// Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
-		if (!valider("connecte","SESSION")) {
-			echo mkHeadLink("Se connecter","connexion",$view); 
-			//echo "<li><a href=\"index.php?view=login\">Se connecter</a></li>";
-		} else {
-			mkHeadLink("Galerie","galerie",$view);
-		  	echo "Vas-y Adrien :)";
-	  }
-		?>
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
-  
-
-
-  <!-- Begin page content -->
   <div class="container">
+    
+    <?php
+    //vérification de la session via la fonction valider
+    if (!valider("connecte", "SESSION")) {
+    ?>
+        <div class="pilule-entete entete-centre">
+            <a href="index.php" class="section-marque">
+                <img src="ressources/img/logo.png" alt="Logo" /> <!-- le logo de FootTier -->
+                <h1>FootTier</h1>
+            </a>
+        </div>
+    <?php
+    } else {
+    ?>
+        <div class="pilule-entete entete-espace" style="position: relative;">
+            <a href="index.php?view=galerie" class="section-marque">
+                <img src="ressources/img/logo.png" alt="Logo" />
+                <h1>FootTier</h1>
+            </a>
 
+            <div class="boutons-nav">
+                <a href="index.php?view=creation" class="bouton-nav">Créer une tierlist</a>
+                <a href="index.php?view=galerie" class="bouton-nav">Galerie de la<br>communauté</a>
+                <a href="index.php?view=brouillon" class="bouton-nav">Mes<br>Brouillons</a>
+                
+                <?php 
+                //vérification du statut admin pour afficher le bouton
+                if (valider("admin", "SESSION") == 1) { 
+                ?>
+                    <a href="index.php?view=admin" class="bouton-nav">Administration</a>
+                <?php } ?>
+            </div>
 
+            <div>
+                <?php $pseudo = htmlspecialchars($_SESSION["pseudo"]); //protection XSS avec htmlspecialchars() ?>
+                <img src="ressources/img/user_icon.png" alt="Profil" class="icone-utilisateur" onclick="document.getElementById('popupUtilisateur').style.display = document.getElementById('popupUtilisateur').style.display === 'none' ? 'block' : 'none';">
+                
+                <div id="popupUtilisateur">
+                    <p style="font-weight: bold; color: #333; margin-bottom: 10px;"><?php echo $pseudo; ?></p>
+                    <a href="controleur.php?action=Logout" class="btn btn-sm btn-danger w-100">Déconnexion</a> <!-- btn-danger : vient de Boostrap -->
+                </div>
+            </div>
 
+        </div>
+    <?php
+    }
+    ?>
 
-
-
-
-
+    <div class="contenu-principal">
