@@ -11,7 +11,7 @@ function verifUserBdd($login,$passe)
   // renvoie faux si user inconnu
   // renvoie l'id de l'utilisateur si succès
 
-  $SQL="SELECT id_user FROM utilisateur WHERE pseudo='$login' AND mot_de_passe='$passe'";
+  $SQL="SELECT id_user FROM utilisateur WHERE pseudo='$login' AND mot_de_passe='$passe';";
 
   return SQLGetChamp($SQL);
   // si on avait besoin de plus d'un champ
@@ -38,7 +38,7 @@ function verifUserBddHash($login, $passe){
 function isAdmin($idUser)
 {
   // vérifie si l'utilisateur est un administrateur
-  $SQL ="SELECT est_admin FROM utilisateur WHERE id_user='$idUser'";
+  $SQL ="SELECT est_admin FROM utilisateur WHERE id_user='$idUser';";
   return SQLGetChamp($SQL); 
 }
 
@@ -49,7 +49,7 @@ function creerUtilisateurHash($pseudo, $passe){
     $hash = password_hash($passe, PASSWORD_BCRYPT);
 
     //(est_admin est à 0 par défaut, NOW() met la date actuelle)
-    $sql = "INSERT INTO utilisateur (pseudo, mot_de_passe, est_admin, date_inscription) VALUES ('$pseudo', '$hash', 0, NOW())";
+    $sql = "INSERT INTO utilisateur (pseudo, mot_de_passe, est_admin, date_inscription) VALUES ('$pseudo', '$hash', 0, NOW());";
     
     return SQLInsert($sql);
 }
@@ -90,11 +90,7 @@ function getCommentairesTierlist($idTierlist){
 //Retourne la liste des tierlists correspondantes
 function RechercheTierlistsParJoueur($nomJoueur){
     $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user
-            WHERE t.est_publique = 1 AND t.id_tierlist IN (SELECT ct.id_tierlist
-                                                            FROM contenu_tierlist AS ct
-                                                            JOIN action_foot AS af ON ct.id_action = af.id_action
-                                                            WHERE af.joueur = $nomJoueur
-                                                          )
+            WHERE t.est_publique = 1 AND t.id_tierlist IN (SELECT ct.id_tierlist FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action WHERE af.joueur = $nomJoueur)
             ORDER BY t.date_creation DESC;";
 
     return parcoursRs(SQLSelect($sql));
@@ -123,6 +119,97 @@ function getBrouillonsUtilisateur($idUser){
             ORDER BY t.date_modification DESC;";
 
     return parcoursRs(SQLSelect($sql));
+}
+
+
+//Ajouter un commentaire
+function ajouterCommentaire($idTierlist, $idUser, $msg){
+    $msgSecurise = addslashes(htmlspecialchars(trim($msg))); //On rend en texte les / (addslashes), 
+    //on rend les @, &, et autres caractères spécials en text (htmlspecialchars) et on enlève les espaces en trop en début et fin (trim)
+    if(empty($msgSecurise)){
+      return false;
+    }
+
+    $sql = "INSERT INTO commentaire (contenu, date_publication, id_user, id_tierlist)
+            VALUES ('$msgSecurise', NOW(), $idUser, $idTierlist);";
+
+    return SQLInsert($sql);
+}
+
+
+//Vérifier si un utilisateur a déjà liké une tierlist
+function aDejaLike($idUser, $idTierlist){
+    $sql = "SELECT COUNT(*) FROM like_tierlist WHERE id_user = $idUser AND id_tierlist = $idTierlist;";
+
+    return SQLGetChamp($sql) > 0; //Renvoie faux si aucun like et vrai si déjà un like
+}
+
+
+//Ajouter ou retirer un like
+//Ajout si pas liké, retrait sinon
+function enregistrerVoteLike($idTierlist, $idUser){
+    if(aDejaLike($idUser, $idTierlist)){
+        //Si l'utilisateur avait déjà liké alors on retire
+        $sql = "DELETE FROM like_tierlist WHERE id_user = $idUser AND id_tierlist = $idTierlist;";
+        SQLDelete($sql);
+        return false; //Le like a été retiré
+    }
+    else{
+        //Si l'utilisateur n'a pas encore liké alors on ajoute
+        $sql = "INSERT INTO like_tierlist (id_user, id_tierlist) VALUES ($idUser, $idTierlist);";
+        SQLInsert($sql);
+        return true;  //Le like a été ajouté
+    }
+}
+
+
+//Récupérer les infos principales d'une tierlist (titre, auteur, nb likes)
+function getTierlistParId($idTierlist){    
+    $sql = "SELECT t.id_tierlist, t.titre, t.date_creation, t.date_modification, u.pseudo, (SELECT COUNT(*) FROM like_tierlist AS like WHERE like.id_tierlist = t.id_tierlist) AS nb_likes
+            FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user WHERE t.id_tierlist = $idTierlist;";
+
+    $lignes = parcoursRs(SQLSelect($sql));
+
+    if(!empty($lignes)){
+        return $lignes[0];
+    }
+
+    return false; //Si aucune tierlist ne correspond à cet ID car empty renvoyé 1
+}
+
+
+//Récupérer le contenu d'une tierlist avec les actions triées par tier
+function getContenuTierlist($idTierlist){
+    $sql = "SELECT ct.tier, af.joueur, af.competition, af.url_image, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
+            WHERE ct.id_tierlist = $idTierlist
+            ORDER BY ct.tier ASC, af.competition DESC;";
+
+    $lignes = parcoursRs(SQLSelect($sql));
+
+    //On regroupe par tier pour faciliter l'affichage 
+    $parTier = [];
+    foreach($lignes as $ligne){
+        $parTier[$ligne["tier"]][] = $ligne;
+    }
+    return $parTier; 
+}
+
+
+//Récupérer les commentaires d'une tierlist
+function getCommentairesTierlist($idTierlist){
+    $sql = "SELECT u.pseudo,c.contenu, c.date_publication FROM commentaire AS c JOIN utilisateur AS u ON c.id_user = u.id_user
+            WHERE c.id_tierlist = $idTierlist
+            ORDER BY c.date_publication DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+
+//Compter les commentaires d'une tierlist (c'est simplement pour notre affichage au-dessus des commentaires dans la vue detail_tierlist
+function getNbCommentaires($idTierlist){
+    $sql = "SELECT COUNT(*) FROM commentaire WHERE id_tierlist = $idTierlist;";
+
+    return SQLGetChamp($sql); //Cela va retourner directement le nombre de commentaires
 }
 
 
