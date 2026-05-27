@@ -54,4 +54,76 @@ function creerUtilisateurHash($pseudo, $passe){
     return SQLInsert($sql);
 }
 
+
+//Récupère les tierlists publiques les plus populaires (triées par nombre de likes)
+//Retourne un tableau de tableaux associatifs contenant les infos des tierlists qui sont triées selon le nombre de likes dans le tableau
+function getPopulariteTierlists(){
+
+    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation, COUNT(like.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS like ON t.id_tierlist = like.id_tierlist
+            WHERE t.est_publique = 1 GROUP BY t.id_tierlist, t.titre, u.pseudo, t.date_creation ORDER BY nb_likes DESC, t.date_creation DESC;";
+    
+    return parcoursRs(SQLSelect($sql));
+}
+
+//Récupère le contenu détaillé d'une tierlist spécifique (ses actions et leurs rangs)
+//Paramètre : $idTierlist l'identifiant de la tierlist à charger
+//Retourne un tableau contenant les actions classées par Tier
+function getContenuTierlist($idTierlist){
+    $sql = "SELECT ct.tier, af.joueur, af.competition, af.annee, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
+            WHERE ct.id_tierlist = $idTierlist (variable PHP car l'ID changera selon la tierlist cliquée) ORDER BY ct.tier ASC, af.annee DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+//Récupère la liste chronologique des commentaires d'une tierlist
+//Paramètre : $idTierlist l'identifiant de la tierlist consultée
+//Retourne la liste des commentaires avec le pseudo de l'auteur
+function getCommentairesTierlist($idTierlist){
+    $sql = "SELECT u.pseudo, c.contenu, c.date_publication FROM commentaire AS c JOIN utilisateur AS u ON c.id_user = u.id_user
+            WHERE c.id_tierlist = $idTierlist (variable PHP car l'ID changera selon la tierlist cliquée) ORDER BY c.date_publication DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+//Recherche les tierlists publiques contenant au moins une action d'un joueur précis
+//Paramètre : $nomJoueur le nom exact du joueur recherché
+//Retourne la liste des tierlists correspondantes
+function RechercheTierlistsParJoueur($nomJoueur){
+    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user
+            WHERE t.est_publique = 1 AND t.id_tierlist IN (SELECT ct.id_tierlist
+                                                            FROM contenu_tierlist AS ct
+                                                            JOIN action_foot AS af ON ct.id_action = af.id_action
+                                                            WHERE af.joueur = $nomJoueur
+                                                          )
+            ORDER BY t.date_creation DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+//Recherche les tierlists publiques créées par un utilisateur (recherche partielle)
+//Paramètre : $pseudo le pseudo (ou partie du pseudo) recherché
+//Retourne la liste des tierlists trouvées classées par popularité
+function rechercheTierlistsParPseudo($pseudo){
+    $sql = "SELECT t.titre, u.pseudo AS createur, COUNT(like.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS like ON t.id_tierlist = like.id_tierlist
+            WHERE t.est_publique = 1 AND u.pseudo LIKE '%$pseudo%'
+            GROUP BY t.id_tierlist, t.titre, u.pseudo
+            ORDER BY nb_likes DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+
+//Récupère les tierlists non publiées (brouillons) d'un utilisateur connecté
+//Paramètre : $idUser l'identifiant de l'utilisateur connecté
+//Retourne la liste des brouillons en cours d'édition
+function getBrouillonsUtilisateur($idUser){
+    $sql = "SELECT t.titre, t.date_modification, COUNT(ct.id_action) AS nb_actions_sauvegardees FROM tierlist t JOIN contenu_tierlist AS ct ON t.id_tierlist = ct.id_tierlist
+            WHERE t.id_user = $idUser AND t.est_publique = 0
+            GROUP BY t.id_tierlist, t.titre, t.date_modification
+            ORDER BY t.date_modification DESC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+
 ?>
