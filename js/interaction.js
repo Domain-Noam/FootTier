@@ -44,3 +44,12 @@ window.onload = function(){ //On attend que TOUT le HTML soit chargé dans le na
 
     verifForm(); //On lance une première vérification automatique
 };
+
+
+
+function coeurRouge(e){
+    document.getElementById("coeur");
+
+    coeur.textContent = "♥";
+    coeur.style.color = "red";
+}

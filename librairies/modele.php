@@ -59,7 +59,7 @@ function creerUtilisateurHash($pseudo, $passe){
 //Retourne un tableau de tableaux associatifs contenant les infos des tierlists qui sont triées selon le nombre de likes dans le tableau
 function getPopulariteTierlists(){
 
-    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation, COUNT(like.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS like ON t.id_tierlist = like.id_tierlist
+    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation, COUNT(lt.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS lt ON t.id_tierlist = lt.id_tierlist
             WHERE t.est_publique = 1 GROUP BY t.id_tierlist, t.titre, u.pseudo, t.date_creation ORDER BY nb_likes DESC, t.date_creation DESC;";
     
     return parcoursRs(SQLSelect($sql));
@@ -67,12 +67,19 @@ function getPopulariteTierlists(){
 
 //Récupère le contenu détaillé d'une tierlist spécifique (ses actions et leurs rangs)
 //Paramètre : $idTierlist l'identifiant de la tierlist à charger
-//Retourne un tableau contenant les actions classées par Tier
+//Retourne un tableau contenant les actions classées par Tier et triées de S à D
 function getContenuTierlist($idTierlist){
-    $sql = "SELECT ct.tier, af.joueur, af.competition, af.annee, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
-            WHERE ct.id_tierlist = $idTierlist (variable PHP car l'ID changera selon la tierlist cliquée) ORDER BY ct.tier ASC, af.annee DESC;";
+    $sql = "SELECT ct.tier, af.joueur, af.competition, af.url_image, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
+            WHERE ct.id_tierlist = $idTierlist ORDER BY ct.tier ASC, af.competition DESC;";
 
-    return parcoursRs(SQLSelect($sql));
+    $lignes = parcoursRs(SQLSelect($sql));
+
+    //On regroupe par tier pour faciliter l'affichage 
+    $parTier = [];
+    foreach($lignes as $ligne){
+        $parTier[$ligne["tier"]][] = $ligne;
+    }
+    return $parTier; 
 }
 
 //Récupère la liste chronologique des commentaires d'une tierlist
@@ -80,10 +87,11 @@ function getContenuTierlist($idTierlist){
 //Retourne la liste des commentaires avec le pseudo de l'auteur
 function getCommentairesTierlist($idTierlist){
     $sql = "SELECT u.pseudo, c.contenu, c.date_publication FROM commentaire AS c JOIN utilisateur AS u ON c.id_user = u.id_user
-            WHERE c.id_tierlist = $idTierlist (variable PHP car l'ID changera selon la tierlist cliquée) ORDER BY c.date_publication DESC;";
+            WHERE c.id_tierlist = $idTierlist ORDER BY c.date_publication DESC;";
 
     return parcoursRs(SQLSelect($sql));
 }
+
 
 //Recherche les tierlists publiques contenant au moins une action d'un joueur précis
 //Paramètre : $nomJoueur le nom exact du joueur recherché
@@ -100,7 +108,7 @@ function RechercheTierlistsParJoueur($nomJoueur){
 //Paramètre : $pseudo le pseudo (ou partie du pseudo) recherché
 //Retourne la liste des tierlists trouvées classées par popularité
 function rechercheTierlistsParPseudo($pseudo){
-    $sql = "SELECT t.titre, u.pseudo AS createur, COUNT(like.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS like ON t.id_tierlist = like.id_tierlist
+    $sql = "SELECT t.titre, u.pseudo AS createur, COUNT(lt.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS lt ON t.id_tierlist = lt.id_tierlist
             WHERE t.est_publique = 1 AND u.pseudo LIKE '%$pseudo%'
             GROUP BY t.id_tierlist, t.titre, u.pseudo
             ORDER BY nb_likes DESC;";
@@ -124,11 +132,13 @@ function getBrouillonsUtilisateur($idUser){
 
 //Ajouter un commentaire
 function ajouterCommentaire($idTierlist, $idUser, $msg){
-    $msgSecurise = addslashes(htmlspecialchars(trim($msg))); //On rend en texte les / (addslashes), 
-    //on rend les @, &, et autres caractères spécials en text (htmlspecialchars) et on enlève les espaces en trop en début et fin (trim)
-    if(empty($msgSecurise)){
+    $msgPropre = htmlspecialchars(trim($msg));  //on rend les @, &, et autres caractères spécials en text (htmlspecialchars) et 
+    //on enlève les espaces en trop en début et fin (trim)
+    if(empty($msgPropre)){
       return false;
     }
+
+    $msgSecurise = proteger($msgPropre);
 
     $sql = "INSERT INTO commentaire (contenu, date_publication, id_user, id_tierlist)
             VALUES ('$msgSecurise', NOW(), $idUser, $idTierlist);";
@@ -165,7 +175,7 @@ function enregistrerVoteLike($idTierlist, $idUser){
 
 //Récupérer les infos principales d'une tierlist (titre, auteur, nb likes)
 function getTierlistParId($idTierlist){    
-    $sql = "SELECT t.id_tierlist, t.titre, t.date_creation, t.date_modification, u.pseudo, (SELECT COUNT(*) FROM like_tierlist AS like WHERE like.id_tierlist = t.id_tierlist) AS nb_likes
+    $sql = "SELECT t.id_tierlist, t.titre, t.date_creation, t.date_modification, u.pseudo, (SELECT COUNT(*) FROM like_tierlist AS lt WHERE lt.id_tierlist = t.id_tierlist) AS nb_likes
             FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user WHERE t.id_tierlist = $idTierlist;";
 
     $lignes = parcoursRs(SQLSelect($sql));
@@ -175,33 +185,6 @@ function getTierlistParId($idTierlist){
     }
 
     return false; //Si aucune tierlist ne correspond à cet ID car empty renvoyé 1
-}
-
-
-//Récupérer le contenu d'une tierlist avec les actions triées par tier
-function getContenuTierlist($idTierlist){
-    $sql = "SELECT ct.tier, af.joueur, af.competition, af.url_image, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
-            WHERE ct.id_tierlist = $idTierlist
-            ORDER BY ct.tier ASC, af.competition DESC;";
-
-    $lignes = parcoursRs(SQLSelect($sql));
-
-    //On regroupe par tier pour faciliter l'affichage 
-    $parTier = [];
-    foreach($lignes as $ligne){
-        $parTier[$ligne["tier"]][] = $ligne;
-    }
-    return $parTier; 
-}
-
-
-//Récupérer les commentaires d'une tierlist
-function getCommentairesTierlist($idTierlist){
-    $sql = "SELECT u.pseudo,c.contenu, c.date_publication FROM commentaire AS c JOIN utilisateur AS u ON c.id_user = u.id_user
-            WHERE c.id_tierlist = $idTierlist
-            ORDER BY c.date_publication DESC;";
-
-    return parcoursRs(SQLSelect($sql));
 }
 
 

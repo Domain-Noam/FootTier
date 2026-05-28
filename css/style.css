@@ -158,3 +158,37 @@ code {
     color: #ffffff; /*On modifie légèrement la couleur pour l'esthétique et pour que l'utilisateur voit bien*/
     text-decoration: underline; /*On remet le soulignement au moment où l'utilisateur passe dessus pour lui montrer que c'est bien un lien*/
 }
+
+
+.detail {
+    display: flex;
+    gap: 6px;
+}
+
+.laTierlist{
+    margin-right: 10vh;
+    background-color: #f5f5f5;
+}
+
+#ifMessages{
+    margin-left: 10vh;
+    background-color: #f5f5f5;
+}
+
+.detail h1 {
+    color: #ffffff;
+    font-size: 35px;
+    margin-bottom: 30px;
+    margin-top: 0;
+    letter-spacing: 1px; /*Pour décoller les lettres car ça nous paraissait pas très beau*/
+    text-align: center;
+}
+
+h3, h4 {
+    font-weight: bold;
+}
+
+#coeur {
+    font-size: 10px;
+    cursor: pointer;
+}

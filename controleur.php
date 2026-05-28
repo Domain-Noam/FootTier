@@ -39,7 +39,7 @@ session_start();
 				$addArgs = array();
 			break;
 
-      case 'Inscription' :
+      	case 'Inscription' :
 			$pseudo = valider("Pseudo");
     		$passe = valider("passe");
 			if($pseudo && $passe){
@@ -48,6 +48,16 @@ session_start();
 			$addArgs = array("view"=>"connexion");
 		break;
 
+		case 'Envoyer' :
+			$msg=valider("nvCommentaire");
+			if(($idUser=valider("idUser", "SESSION")) && ($idTierlist=valider("idTierlist")) && $msg != ""){
+				ajouterCommentaire($idTierlist, $idUser, $msg);
+			}
+			$addArgs = array(
+				"view"=>"detail_tierlist",
+				"idTierlist"=>$idTierlist
+			);
+			break;
 
 		}
 	}
