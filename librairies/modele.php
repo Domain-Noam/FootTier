@@ -79,7 +79,7 @@ function getContenuTierlist($idTierlist){
     foreach($lignes as $ligne){
         $parTier[$ligne["tier"]][] = $ligne;
     }
-    return $parTier; 
+    return $parTier; //Comme parcoursRs c'est déjà un tableau de tableau associatifs, et que $parTier est un tableau de ces tableaux, alors on a 3 dimensions
 }
 
 //Récupère la liste chronologique des commentaires d'une tierlist

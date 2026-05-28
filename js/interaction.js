@@ -46,10 +46,24 @@ window.onload = function(){ //On attend que TOUT le HTML soit chargé dans le na
 };
 
 
+//Fonction pour passer le coeur en rouge quand l'utilisateur clique dessus
+function coeurRouge(){
+    var coeur = document.getElementById("coeur");
+    var nbLikes = document.getElementById("nbLikes");
+    var estUnLike = (coeur.textContent.trim() === "♥"); //true alors déjà liké, false alors pas encore liké
 
-function coeurRouge(e){
-    document.getElementById("coeur");
+    if(estUnLike){
+        //Si c'est déjà un like
+        coeur.textContent = "♡";
+        coeur.style.color = "rgba(255,255,255,0.7)";
+        nbLikes.textContent = parseInt(nbLikes.textContent)-1;
+    }
+    else{
+        //Si l'utilisateur veut ajouté le like
+        coeur.textContent = "♥";
+        coeur.style.color = "red";
+        nbLikes.textContent = parseInt(nbLikes.textContent)+1;
+    } //On ajoute +1 au chiffre affiché à côté
 
-    coeur.textContent = "♥";
-    coeur.style.color = "red";
+    document.getElementById("formLike").submit(); //On soumet le formulaire qui est lié aux likes pour envoyer au contrôleur pour modifier la BDD
 }

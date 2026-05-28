@@ -53,10 +53,14 @@ session_start();
 			if(($idUser=valider("idUser", "SESSION")) && ($idTierlist=valider("idTierlist")) && $msg != ""){
 				ajouterCommentaire($idTierlist, $idUser, $msg);
 			}
-			$addArgs = array(
-				"view"=>"detail_tierlist",
-				"idTierlist"=>$idTierlist
-			);
+			$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
+			break;
+
+		case 'Like' :
+			if(($idTierlist = valider("idTierlist")) && ($idUser = valider("idUser", "SESSION"))){
+        		enregistrerVoteLike($idTierlist, $idUser);
+    		}
+    		$addArgs = array("view" => "detail_tierlist", "idTierlist" => $idTierlist);
 			break;
 
 		}
