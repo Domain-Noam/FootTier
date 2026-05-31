@@ -39,51 +39,87 @@ session_start();
 				$addArgs = array();
 			break;
 
-      case 'Inscription' :
-			$pseudo = valider("Pseudo");
-    		$passe = valider("passe");
-			if($pseudo && $passe){
-         		creerUtilisateurHash($pseudo, $passe);
+			case 'Inscription' :
+				$pseudo = valider("Pseudo");
+				$passe = valider("passe");
+				if($pseudo && $passe){
+					creerUtilisateurHash($pseudo, $passe);
+				}
+				$addArgs = array("view"=>"connexion");
+			break;
+
+			// ==============================================================================
+			// INTERCEPTION DES ACTIONS DE LA PAGE D'ADMINISTRATION
+			// ==============================================================================
+
+			case 'Promouvoir':
+				if ($idUser = valider("id_user")) {
+					promouvoirAdmin($idUser);
+				}
+				$addArgs = array("view" => "admin");
+			break;
+
+			case 'Demettre':
+				if ($idUser = valider("id_user")) {
+					demettreAdmin($idUser);
+				}
+				$addArgs = array("view" => "admin");
+			break;
+
+			case 'Bannir':
+				if ($idUser = valider("id_user")) {
+					bannirUtilisateur($idUser);
+				}
+				$addArgs = array("view" => "admin");
+			break;
+
+			case 'AjouterAction':
+				$joueur = valider("joueur");
+				$competition = valider("competition");
+				$id_categorie = valider("id_categorie");
+				$url_image = valider("url_image");
+				$url_media = valider("url_media");
+
+				if ($joueur && $competition && $id_categorie && $url_image && $url_media) {
+					ajouterNouvelleAction($joueur, $competition, $id_categorie, $url_image, $url_media);
+				}
+				$addArgs = array("view" => "admin");
+			break;
+
+			case 'SupprimerAction':
+				if ($idAction = valider("id_action")) {
+					supprimerAction($idAction);
+				}
+				$addArgs = array("view" => "admin");
+			break;
+
+			case 'SupprimerTierlist':
+			if (valider("connecte", "SESSION")) {
+				$idTierlist = valider("id_tierlist", "GET");
+				if ($idTierlist != false) {
+					// Appel de la fonction du modèle
+					supprimerTierlist($idTierlist);
+				}
 			}
-			$addArgs = array("view"=>"connexion");
-		break;
-
-
+			// On redirige vers la vue brouillon une fois la suppression terminée
+			$qs = "?view=brouillon";
+			break;
 		}
 	}
 
 	// On redirige toujours vers la page index, mais on ne connait pas le répertoire de base
 	// On l'extrait donc du chemin du script courant : $_SERVER["PHP_SELF"]
-	// Par exemple, si $_SERVER["PHP_SELF"] vaut /chat/data.php, dirname($_SERVER["PHP_SELF"]) contient /chat
-
 	$urlBase = dirname($_SERVER["PHP_SELF"]) . "/index.php";
-	// On redirige vers la page index avec les bons arguments
-  
-	//tprint($addArgs);
-  $addArgsStr = '';
-  if (is_array($addArgs)) {
-    foreach($addArgs as $key => $arg) {
-      $addArgsStr .= '&' . $key . '=' . $arg;
-    }
-    $addArgsStr = substr($addArgsStr, 1);
-  } else {
-    $addArgsStr = $addArgs;
-  }
-		//echo ($addArgsStr);
-		//die("");
-	header("Location:" . $urlBase . '?' . $addArgsStr);
-
-	// On écrit seulement après cette entête
-	ob_end_flush();
 	
+	// On reconstruit les arguments GET pour la redirection (View, messages d'erreur...)
+	$addArgsStr = '';
+	if (is_array($addArgs)) {
+		foreach($addArgs as $key => $val) {
+			if ($addArgsStr == '') $addArgsStr .= "?$key=" . urlencode($val);
+			else $addArgsStr .= "&$key=" . urlencode($val);
+		}
+	}
+
+	// Redirection finale automatique vers l'index
+	header("Location:" . $urlBase . $addArgsStr);
 ?>
-
-
-
-
-
-
-
-
-
-

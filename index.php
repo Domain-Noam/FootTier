@@ -45,6 +45,46 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 		case "accueil" : 
 			include("views/connexion.php");
 		break;
+		
+		case 'admin':
+        		//c'est le Contrôleur/Routeur qui prépare les variables attendues par la vue
+       			$utilisateurs = getUtilisateurs();
+        		$categories = getCategories();
+        		$actions = getActions();
+        		include("views/admin.php");
+    		break;
+    		
+    		case 'galerie':
+			//on utilise la fonction valider() pour récupérer les filtres (GET)
+			$rechercheJoueur = valider("joueur", "GET");
+			$recherchePseudo = valider("pseudo", "GET");
+			$rechercheCat = valider("categorie", "GET");
+
+			//on charge toutes les catégories pour fabriquer le menu déroulant
+			$categories = getCategories();
+
+			//logique de filtrage
+			if ($rechercheJoueur != false) {
+				$tierlists = RechercheTierlistsParJoueur($rechercheJoueur);
+			} 
+			else if ($recherchePseudo != false) {
+				$tierlists = rechercheTierlistsParPseudo($recherchePseudo);
+			} 
+			else if ($rechercheCat != false) {
+				$tierlists = rechercheTierlistsParCategorie($rechercheCat);
+			}
+			else {
+				//par défaut, on charge les tierlists les plus populaires
+				$tierlists = getPopulariteTierlists();
+			}
+
+			//on inclut la vue de la galerie
+			include("views/galerie.php");
+		break;
+
+		case 'brouillon':
+			include("views/brouillon.php");
+		break;
 
 
 		default : // si le template correspondant à l'argument existe, on l'affiche

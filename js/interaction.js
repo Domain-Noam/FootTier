@@ -44,3 +44,12 @@ window.onload = function(){ //On attend que TOUT le HTML soit chargé dans le na
 
     verifForm(); //On lance une première vérification automatique
 };
+
+//intercepte le clic et affiche une alerte de confirmation
+function confirmerSuppression(event, msg) {
+    if (!window.confirm(msg)) {
+        event.preventDefault(); //annule le clic si l'utilisateur dit "Annuler"
+        return false;
+    }
+    return true; //laisse passer le clic si l'utilisateur dit "OK"
+}

@@ -12,10 +12,10 @@ $BDD_base="testdb_<nom>";
 
 // MACHINE LINUX 
 $BDD_host="localhost";
-//$BDD_user="Adri1";
-//$BDD_password="Adri1MariaDBpc/26";
-$BDD_user="ndomain";
-$BDD_password="NDom1240408@"; // vide sous windows
+$BDD_user="Adri1";
+$BDD_password="Adri1MariaDBpc/26";
+//$BDD_user="ndomain";
+//$BDD_password="NDom1240408@"; // vide sous windows
 $BDD_base="FootTier";
 
 ?>
