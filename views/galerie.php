@@ -24,6 +24,9 @@ else{
 	$tierlists = getPopulariteTierlists();
 }
 
+$tiers = ["S", "A", "B", "C", "D"];
+$couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"=>"#1b7bcf"];
+
 ?>
 
 <h1 class="titreGalerie">La Galerie des Tierlists de la Communauté</h1>
@@ -36,13 +39,13 @@ else{
     <div class="row">
         <div class="col-md-3">
             <?php 
-            mkInput("text", "joueur", valider("joueur", "GET"), "class=\"form-control input-recherche\" placeholder=\"Joueur (Ex: Mbappé)\""); 
+            mkInput("text", "joueur", valider("joueur"), "class=\"form-control input-recherche\" placeholder=\"Joueur (Ex: Mbappé)\""); 
             ?>
         </div>
         
         <div class="col-md-3">
             <?php 
-            mkInput("text", "pseudo", valider("pseudo", "GET"), "class=\"form-control input-recherche\" placeholder=\"Créateur\""); 
+            mkInput("text", "pseudo", valider("pseudo"), "class=\"form-control input-recherche\" placeholder=\"Créateur\""); 
             ?>
         </div>
 
@@ -75,52 +78,62 @@ else{
     <?php
     //si la base de données possède des tierlists publiques correspondantes
     if ($tierlists != false) {
-        
-        //on parcourt chaque ligne du jeu de résultats SQL
-        foreach ($tierlists as $tl) {
-            
-            //on extrait l'ID unique requis par Noam pour sa vue de détails
-            $idTierlist = $tl['id_tierlist']; 
-            $lienDetail = "index.php?view=detail_tierlist&idTierlist=" . $idTierlist;
-            ?>
-            
-            <div class="col-md-3 colonne-carte">
-                <div class="carte-tierlist">
-                    
-                    <a href="<?php echo $lienDetail; ?>">
-                        <img src="ressources/img/tierlist_placeholder.png" alt="Aperçu Tierlist" class="image-tierlist">
-                    </a>
-                    
-                    <div class="infos-tierlist">
-                        
-                        <div class="texte-likes">
-                            ♡ <?php
-                            if (isset($tl['nb_likes']) && $tl['nb_likes'] != "") {
-                                echo $tl['nb_likes'];
-                            } else {
-                                echo "0";
-                            }
-                            ?>
-                        </div>
-                        
-                        <a href="<?php echo $lienDetail; ?>" class="lien-titre">
-                            <?php echo htmlspecialchars($tl['titre']); ?>
-                        </a>
-                    </div>
-                    
-                    <div class="texte-auteur">
-                        Par <strong><?php echo htmlspecialchars($tl['createur']); ?></strong>
-                    </div>
+        foreach($tierlists as $t){
+            $idTierlist = $t['id_tierlist']; 
+            $contenuParTier = getContenuTierlist($idTierlist);  
+            echo "<div class=\"col-md-3 colonne-carte\">";
+            echo "<div class=\"carte-tierlist\">";
+            echo "<a href=\"index.php?view=detail_tierlist&idTierlist=$idTierlist\">";
+            //On affiche la tierlist en petit comme dans la vue detail_tierlist
+            echo "<div class=\"detailTierlist\">";
+            foreach($tiers as $tier){
+                echo "<div class=\"ligne\">";
+                echo "<p class=\"lettre\" style=\"background-color: $couleurs[$tier];\">";
+                echo $tier . "</p>";
 
-                </div>
-            </div>
+                echo "<div class=\"vignettes\">";
+                if(!empty($contenuParTier[$tier])){
+                    foreach($contenuParTier[$tier] as $vignette){
+                        echo "<div class=\"detailVignette\">";
+                        if(!empty($vignette["url_image"])){
+                            echo "<img src=" . htmlspecialchars($vignette["url_image"]) . " alt=" . htmlspecialchars($vignette["joueur"]) . ">";
+                        }
+                        else{
+                            echo "<div class=\"pasVignette\"></div>";
+                        }
+                        echo "</div>";
+                    }
+                }
+                echo "</div>";
+                echo "</div>";
+            }
+            echo "</div>";
+            echo "</a>";
+            echo "<div class=\"infos-tierlist\">";
+            echo "<div class=\"texte-likes\">";
+            echo "♡";
+            if (valider("nb_likes")){
+                echo $tl['nb_likes'];
+            }
+            else{
+                echo "0";
+            }
+            echo "</div>";
+            echo "<a href=\"index.php?view=detail_tierlist&idTierlist=$idTierlist\" class=\"lien-titre\">";
+            echo htmlspecialchars($t['titre']); 
+            echo "</a>";
+            echo "</div>";
             
-            <?php
-        } //fin de la boucle foreach
-        
-    } else {
+            echo "<div class=\"texte-auteur\">";
+            echo "Par <strong>" . htmlspecialchars($t['createur']) . "</strong>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+        }     
+    }
+    else{
         //message d'alerte si aucun résultat n'est retourné par le modèle
-        echo '<div class="col-md-12 text-center message-vide">Aucune tierlist trouvée pour cette recherche.</div>';
+        echo "<div class=\"col-md-12 text-center message-vide\">Aucune tierlist trouvée pour cette recherche.</div>";
     }
     ?>
 </div>

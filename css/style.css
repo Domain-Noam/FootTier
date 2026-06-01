@@ -449,6 +449,11 @@ body {
     margin-left: 10px;
 }
 
+.lien-titre:hover {
+    text-decoration: none;
+    color: #333;
+}
+
 .texte-auteur {
     font-size: 11px;
     color: #666;
@@ -567,18 +572,8 @@ body {
 
 .grandeDiv {
     padding: 10px 10px;
-    color: #ffffff;
 }
 
-.grandeDiv h1 {
-    color: #ffffff;
-    margin-top: 0;
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: bold;
-    letter-spacing: 1px; /*Comme ça les lettres du titre de la page seront espacées*/
-}
 
 .sousDivGD {
     display: flex;
@@ -726,7 +721,7 @@ body {
 }
 
 /*Pour le titre de la vue*/
-.titreCreation, .titreBrouillon, .titreAdmin, .titreGalerie {
+.titreCreation, .titreBrouillon, .titreAdmin, .titreGalerie, .titreDetail {
     margin: 0;
     color: #2c166d;
     font-size: 30px;

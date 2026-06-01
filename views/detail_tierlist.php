@@ -5,7 +5,7 @@ if(basename($_SERVER["PHP_SELF"]) != "index.php"){
 	die("");
 }
 
-$idTierlist = valider("idTierlist", "GET");
+$idTierlist = valider("idTierlist");
 
 if(!$idTierlist){
     header("Location: index.php?view=galerie");
@@ -27,7 +27,7 @@ $dejaLike = ($idUser && aDejaLike($idUser, $idTierlist));
 ?>
 
 <div class="grandeDiv">
-    <h1 class="titre-principal">Vue détaillée d'une Tierlist</h1>
+    <h1 class="titreDetail">Vue détaillée d'une Tierlist</h1>
 
     <div class="sousDivGD">
 
