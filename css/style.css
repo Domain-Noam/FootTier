@@ -159,9 +159,7 @@ code {
     text-decoration: underline; /*On remet le soulignement au moment où l'utilisateur passe dessus pour lui montrer que c'est bien un lien*/
 }
 
-/* =========================================
-   STYLE GLOBAL (BODY, HEADER, FOOTER)
-   ========================================= */
+/*POUR BODY, HEADER, FOOTER*/
 
 /*fond du site*/
 body {
@@ -295,9 +293,7 @@ body {
     width: 50px;
 }
 
-/* =========================================
-   STYLE DE LA PAGE ADMINISTRATION
-   ========================================= */
+/*POUR LA VUE ADMINISTRATION*/
 
 /*titre principal de la paget*/
 .titre-principal {
@@ -366,9 +362,7 @@ body {
     padding: 8px 30px;
 }
 
-/* =========================================
-   STYLE DE LA PAGE GALERIE
-   ========================================= */
+/*POUR LA VUE GALERIE*/
 
 /*l'en-tête de la page*/
 .titre-galerie {
@@ -467,9 +461,7 @@ body {
     margin-top: 50px;
 }
 
-/* =========================================
-   STYLE DE LA PAGE BROUILLON
-   ========================================= */
+/*POUR LA VUE BROUILLON*/
 
 .carte-brouillon {
     background-color: #dedede;
@@ -554,4 +546,414 @@ body {
     width: 100%;
     margin-bottom: 5px;
     text-align: center;
+}
+
+
+
+/*POUR LA VUE DETAIL_TIERLIST*/
+
+
+.grandeDiv {
+    padding: 10px 10px;
+    color: #ffffff;
+}
+
+.grandeDiv h1 {
+    color: #ffffff;
+    margin-top: 0;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+    letter-spacing: 1px; /*Comme ça les lettres du titre de la page seront espacées*/
+}
+
+.sousDivGD {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/*Pour la gauche*/
+.laTierlist {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 14px;
+    width: 300px;
+    margin-top: 25px;
+}
+
+.laTierlist h3 {
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.detailTierlist {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 12px;
+}
+
+.ligne {
+    display: flex;
+    align-items: stretch;
+    min-height: 42px;
+}
+
+.lettre {
+    width: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.vignettes {
+    flex: 1;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    flex-wrap: wrap; /*Signifie que les enfants de cette balise ont le droit d'aller à la ligne*/
+    gap: 3px;
+    padding: 3px;
+    align-items: center;
+}
+
+.detailVignette {
+    width: 36px;
+    height: 36px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.08);
+}
+
+.detailVignette img {
+    width: 100%;
+    height: 100%;
+    /*object-fit: cover;*/
+}
+
+.pasVignette {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.05);
+}
+
+.legende {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+#coeur {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0;
+    /*line-height: 1;*/
+}
+
+#coeur:disabled {
+    cursor: default;
+}
+
+#nbLikes {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    min-width: 16px;
+}
+
+.titreTierlist {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    font-weight: bold;
+}
+
+/*Pour la partie de droite, donc le iframe et le nombre de commentaires*/
+.espaceCommentaire {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nbCommentaires {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    margin: 0;
+    text-align: right;
+}
+
+#ifMessages {
+    width: 100%;
+    height: 370px;
+    border-radius: 8px;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+
+/*POUR LA VUE CRÉATION*/
+
+.pageCreation {
+    padding: 20px 30px 40px;
+    color: #ffffff;
+}
+
+/*Pour le titre de la vue*/
+.titreCreation {
+    margin: 0;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.barreHaut {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/*Le champ titre de la tierlist*/
+.inputTitre {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+    padding: 10px 16px;
+    color: #ffffff;
+    font-size: 13px;
+    width: 220px;
+}
+
+.inputTitre::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.inputTitre:focus {
+    outline: none; /*N'agit pas sur les bords, mais sur les contours*/
+    border-color: rgba(255,255,255,0.7);
+}
+
+/*Le champ type de la tierlist*/
+.inputType {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+    padding: 10px 16px;
+    color: #ffffff;
+    font-size: 13px;
+    width: 180px;
+}
+
+.inputType::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+.inputType:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.7);
+}
+
+/*Pour le bouton Sauvegarder*/
+.btnSauvegarder {
+    background-color: rgba(255,255,255,0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+/*Pour le bouton Partager*/
+.btnPartager {
+    background-color: #ffffff;
+    color: #5e5d7a;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.zoneCreation {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/*Pour la tierlist à gauche*/
+.grilleTierlist {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 2; /*Ceci permet de prendre 2/3 de la largeur disponible dans la div*/
+    min-width: 400px;
+}
+
+/*Pour une ligne de la tierlist*/
+.ligneTier {
+    display: flex;
+    align-items: stretch; /*Permet que les différentes div à l'intérieur de la ligne prennent toute l'espace*/
+    min-height: 60px;
+}
+
+/*Pour les lettres des tiers*/
+.lettreTier {
+    width: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+/* Zone qui reçoit les vignettes par drag & drop */
+.zoneDepot {
+    flex: 1;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    flex-wrap: wrap;  /*Les vignettes passent à la ligne si besoin*/
+    gap: 4px;
+    padding: 4px 6px;
+    align-items: center;
+    min-height: 60px;
+}
+
+/*Pour un effet visuel de survol*/
+.zoneDepot.survol, .bibliotheque.survol {
+    background-color: rgba(255,255,255,0.18);
+    outline: 2px dashed rgba(255,255,255,0.5);
+}
+
+/*Pour les vignettes dans la tierlist*/
+.vignetteCreation {
+    width: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: grab;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,0.08);
+    padding: 3px;
+}
+
+.vignetteCreation:active {
+    cursor: grabbing; /*Permet d'afficher une main fermée qui agrippe la vignette*/
+}
+
+.vignetteCreation:hover {
+    transform: scale(1.05); /*Pour un peu aggrandir l'image, la vignette*/
+}
+
+.vignetteCreation img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover; /*C'est utilisé pour des images ou vidéos pour que celles-ci remplissent entièrement leur conteneur*/
+    border-radius: 3px;
+    pointer-events: none; /*Important pour le drag and drop pour ne pas intercepter les évènements drag*/
+}
+
+/*Pour les vidéos ou vignettes, selon le chargement réussis ou non, dans la bibliothèque à droite (donc plus grandes que dans la tierlist)*/
+.vignetteBiblio {
+    width: 120px;   /* Plus large pour que la vidéo soit bien visible */
+}
+
+.mediaVignette {
+    width: 114px;
+    height: 80px;  
+    object-fit: cover;
+    border-radius: 3px;
+    pointer-events: none; /*Très important pour le drag and drop car, sans ça, la vidéo capture le dragstart, donc ça remet en route le drag and drop*/
+    display: block;
+}
+
+/*Pour le label sous la vignette dans la bibliothèque*/
+.vignetteBiblio .labelVignette {
+    max-width: 116px;
+    font-size: 10px;
+}
+
+/*Pour le placeholder quand il n'y a pas du tout de média*/
+.vignetteVide {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+.vignetteBiblio .vignetteVide {
+    width: 114px;
+    height: 80px;
+}
+
+/*Pour le label sous la vignette*/
+.labelVignette {
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    margin-top: 3px;
+    max-width: 52px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/*Pour l'ensemble de la div de la bibliothèque à droite*/
+.bibliotheque {
+    flex: 1; /*Pour prendre 1/3 de la largeur*/
+    min-width: 280px;  
+    max-height: 480px; 
+    overflow-y: auto;  /*Ça permet de forcer le navigateur à afficher la barre de défilement tout le temps, même si le texte est très court*/
+    background-color: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-content: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent; /*Transparent pour éviter que ça se mette sur les vidéos/images*/
+}
+
+/*Pour le titre au-dessus de la bibliothèque*/
+.titreBibliotheque {
+    width: 100%;
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 6px 0;
+    text-align: center;
+}
+
+/*Pour le message quand toutes les actions sont placées*/
+.pasActions {
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
 }

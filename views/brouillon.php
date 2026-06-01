@@ -18,8 +18,8 @@ $idUser = $_SESSION["idUser"];
 $brouillons = getBrouillonsUtilisateur($idUser);
 ?>
 
-<div class="page-header text-center">
-  <h1 style="color: #ffffff; font-weight: bold;">Mes brouillons</h1>
+<div class="page-header">
+  <h1 class="titre-principal">Mes brouillons</h1>
 </div>
 
 <div class="row">
@@ -64,7 +64,8 @@ $brouillons = getBrouillonsUtilisateur($idUser);
             
             <?php
         }
-    } else {
+    }
+    else {
         echo '<div class="col-md-12 text-center" style="color: #ffffff; font-size: 18px; margin-top: 50px;">Vous n\'avez aucun brouillon en cours.</div>';
     }
     ?>

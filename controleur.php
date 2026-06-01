@@ -14,7 +14,8 @@ session_start();
 		echo "Action = '$action' <br />";
 		switch($action)
 		{
-			
+			/*POUR CONNEXION/INSCRIPTION*/
+
 			case 'Connexion' :
 				// On verifie la presence des champs pseudo et mot_de_passe
 				if ($pseudo = valider("Pseudo"))
@@ -48,9 +49,8 @@ session_start();
 				$addArgs = array("view"=>"connexion");
 			break;
 
-			// ==============================================================================
-			// INTERCEPTION DES ACTIONS DE LA PAGE D'ADMINISTRATION
-			// ==============================================================================
+
+			/*POUR LA VUE ADMINISTRATION*/
 
 			case 'Promouvoir':
 				if ($idUser = valider("id_user")) {
@@ -93,6 +93,9 @@ session_start();
 				$addArgs = array("view" => "admin");
 			break;
 
+
+			/*POUR LA VUE BROUILLON*/
+
 			case 'SupprimerTierlist':
 			if (valider("connecte", "SESSION")) {
 				$idTierlist = valider("id_tierlist", "GET");
@@ -102,8 +105,85 @@ session_start();
 				}
 			}
 			// On redirige vers la vue brouillon une fois la suppression terminée
-			$qs = "?view=brouillon";
+			$addArgs = array("view" => "brouillon");
 			break;
+
+
+			/*POUR LA VUE DETAIL_TIERLIST*/
+
+			case 'Envoyer' :
+			$msg=valider("nvCommentaire");
+			if(($idUser=valider("idUser", "SESSION")) && ($idTierlist=valider("idTierlist")) && $msg != ""){
+				ajouterCommentaire($idTierlist, $idUser, $msg);
+			}
+			$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
+			break;
+
+			case 'Like' :
+				if(($idTierlist = valider("idTierlist")) && ($idUser = valider("idUser", "SESSION"))){
+        			enregistrerVoteLike($idTierlist, $idUser);
+	    		}
+    			$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
+				break;
+
+
+			/*POUR LA VUE CREATION*/
+
+        	case 'SauvegarderCreation' :
+            	if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+					$titre = valider("titre");
+					if(!$titre){ 
+    					$titre = "Sans titre";
+					}
+            	    mettreAJourTitreBrouillon($idTierlist, $titre);
+					if(valider("placements", "GET") && is_array($_GET["placements"])){
+	                    foreach($_GET["placements"] as $idAction=>$tier){
+    	                    if($tier === "BIBLIO"){
+        	                    supprimerPlacement($idTierlist, $idAction);
+            	            }
+                	        else{
+                    	        sauvegarderPlacement($idTierlist, $idAction, $tier);
+	                        }
+    	                }
+        	        }
+            	}
+            	$addArgs = array("view"=>"creation", "idTierlist"=>$idTierlist);
+            	break;
+
+           
+            case 'PublierTierlist' :
+                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+					$titre = valider("titre");
+					if(!$titre){ 
+    					$titre = "Sans titre";
+					}
+
+                    if(valider("placements", "GET") && is_array($_GET["placements"])){
+                        foreach($_GET["placements"] as $idAction => $tier){
+                            if($tier === "BIBLIO"){
+                                supprimerPlacement($idTierlist, $idAction);
+                            }
+                            else{
+                                sauvegarderPlacement($idTierlist, $idAction, $tier);
+                            }
+                        }
+                    }
+                    publierBrouillon($idTierlist, $titre);
+					$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
+                }
+                else{
+                    $addArgs = array("view"=>"galerie");
+                }
+            	break;
+
+        
+            case 'SupprimerBrouillon' :
+                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+                    supprimerTierlist($idTierlist);
+                }
+                $addArgs = array("view"=>"brouillon");
+            break;
+
 		}
 	}
 
