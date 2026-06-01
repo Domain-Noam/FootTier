@@ -65,15 +65,15 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
             <input type="text" name="titre" id="titreTierlistInput" class="inputTitre" placeholder="Nom de la tierlist" value="<?=htmlspecialchars((string)$infosTierlist["titre"])?>" maxlength="150">
             <div class="inputType">
             <?php
-            $tabCat = array();
-            $tabCat[] = array("id" => "", "label" => "Catégorie (Toutes)");
+            $tabCategories = array();
+            $tabCategories[] = array("id" => "", "label" => "Catégorie (Toutes)");
             
             if ($categories != false) {
                 foreach($categories as $cat) {
-                    $tabCat[] = array("id" => $cat['id_categorie'], "label" => $cat['nom_categorie']);
+                    $tabCategories[] = array("id" => $cat['id_categorie'], "label" => $cat['nom_categorie']);
                 }
             }
-            mkSelect("categorie", $tabCat, "id", "label", valider("categorie"));
+            mkSelect("categorie", $tabCategories, "id", "label", valider("categorie"));
             ?>
             </div>
             <div class="boutons">
@@ -125,8 +125,8 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                         echo "<div class=\"vignetteCreation vignetteBiblio\" draggable=\"true\" id=\"vignette-" . $action["id_action"] . "\" data-id-action=\"" . $action["id_action"] . "\" ondragstart=\"commencerGlisser(event)\">";
                         if(!empty($action["url_media"])){
                             //Vidéo de l'action (mp4 stocké localement dans notre répertoire /ressources)
-                            //Grâce à autoplay, muted et loop, la vidéo tourne en boucle silencieuse
-                            //preload=\"metadata\" est utile pour indiquer au navigateur de télécharger uniquement les informations de base pour l'économie de la page 
+                            //Grâce à autoplay, muted et loop, la vidéo tourne en boucle silencieusement
+                            //preload=\"metadata\" est utile pour indiquer au navigateur de télécharger uniquement les informations de base pour l'économie de la page (pour éviter des bugs)
                             echo "<video class=\"mediaVignette\" src=\"" . htmlspecialchars($action["url_media"]) . "\" autoplay muted loop preload=\"metadata\">";
                             
                             //Il faut traiter le cas si le navigateur ne supporte pas la vidéo car sinon ça va planter, donc on affiche l'image
@@ -150,7 +150,7 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                     }
                 }
                 else{
-                    echo "<p class=\"pasActions\">Toutes les actions ont été placées !</p>";
+                    echo "<p class=\"pasActions\">Toutes les actions ont été placées !</p>"; //C'est le cas de quelqu'un qui mettrait toutes les actions dans sa tierlist (ça fait beaucoup mais on trouvait ça inutile d'empêcher ça)
                 }
                 ?>
 
@@ -161,6 +161,6 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
         <div id="champsHidden"></div>
     </form>
 
-</div><!--fin de la grande div pageCreation prenant la page entière-->
+</div>
 
 

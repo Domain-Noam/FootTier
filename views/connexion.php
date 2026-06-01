@@ -6,6 +6,11 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	die("");
 }
 
+$msg=valider("msg");
+if($msg){
+  echo $msg;
+}
+
 //Chargement eventuel des données en cookies
 $pseudo = valider("pseudo", "COOKIE");
 $passe = valider("mot_de_passe", "COOKIE"); 
@@ -14,7 +19,7 @@ $passe = valider("mot_de_passe", "COOKIE");
 <div class="centre">
 	<h1>Connexion</h1>
 
- <form role="form" action="controleur.php" novalidate> <!-- novalidate sert à enlever les bords rouges natif de Boostrap-->
+ <form role="form" action="controleur.php" novalidate> <!--novalidate sert à enlever les bords rouges natif de Boostrap-->
   <div class="formPseudo">
     <label for="pseudo">Pseudo</label>
     <input type="text" class="info" id="pseudo" name="Pseudo" placeholder="NOM D'UTILISATEUR" value="<?php echo $pseudo;?>" >

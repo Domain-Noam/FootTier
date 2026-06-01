@@ -14,6 +14,11 @@ if (!valider("connecte", "SESSION") || valider("admin", "SESSION") != 1) {
     return;
 }
 
+if (!valider("admin", "SESSION")) {
+	header("Location:index.php?view=connexion&msg=" . urlencode("Compte admin nécessaire"));
+	die("");
+}
+
 $utilisateurs = getUtilisateurs();
 $categories = getCategories();
 $actions = getActions();

@@ -118,6 +118,7 @@ session_start();
 			}
 			$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
 			break;
+			
 
 			case 'Like' :
 				if(($idTierlist = valider("idTierlist")) && ($idUser = valider("idUser", "SESSION"))){
