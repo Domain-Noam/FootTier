@@ -18,7 +18,7 @@ $contenuParTier = getContenuTierlist($idTierlist); //C'est un tableau groupé pa
 
 $tiers = ["S", "A", "B", "C", "D"];
 //Au lieu d'aller chercher en CSS les couleurs, on peut directement les amener ici dans un tableau associatif
-$couleurs = ["S" => "#e53935", "A" => "#FB8C00", "B" => "#C6A800", "C" => "#43A047", "D" => "#1E88E5",];
+$couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"=>"#1b7bcf"];
 
 //On regard si l'utilisateur connecté a déjà liké 
 $idUser = valider("idUser", "SESSION");

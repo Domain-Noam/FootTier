@@ -196,4 +196,123 @@ function getNbCommentaires($idTierlist){
 }
 
 
+/*POUR LA VUE CRÉATION*/
+
+// un nouveau brouillon vide pour l'utilisateur et retourne son ID.ou false si échec
+//est_publique = 0 par défaut 
+function creerNouveauBrouillon($idUser, $titre){
+    $titrePropre = htmlspecialchars(trim($titre));
+    if(empty($titrePropre)){
+        $titrePropre = "Sans titre";
+    }
+    $titreSecurise = proteger($titrePropre);
+    $sql = "INSERT INTO tierlist (titre, est_publique, date_creation, date_modification, id_user) VALUES ('$titreSecurise', 0, NOW(), NOW(), $idUser);";
+    return SQLInsert($sql); 
+}
+
+
+//Récupère les infos d'une tierlist appartenant à un utilisateur précis pour préremplir la vue de création
+function getTierlistPourEdition($idTierlist, $idUser){
+    $sql = "SELECT t.id_tierlist, t.titre, t.est_publique, t.date_creation, t.date_modification, t.id_categorie, c.nom_categorie
+            FROM tierlist AS t LEFT JOIN categorie AS c ON t.id_categorie = c.id_categorie
+            WHERE t.id_tierlist = $idTierlist AND t.id_user = $idUser;";
+
+    $lignes = parcoursRs(SQLSelect($sql));
+
+    if(!empty($lignes)){
+        return $lignes[0]; 
+    }
+    return false;
+}
+
+
+//Récupère toutes les actions de la bibliothèque qui ne sont pas encore placées dans la tierlist
+function getActionsRestantes($idTierlist){
+    $sql = "SELECT af.id_action, af.joueur, af.competition, af.url_image, c.nom_categorie FROM action_foot AS af
+            JOIN categorie AS c ON af.id_categorie = c.id_categorie
+            WHERE af.id_action NOT IN (SELECT ct.id_action FROM contenu_tierlist AS ct WHERE ct.id_tierlist = $idTierlist)
+            ORDER BY c.nom_categorie ASC, af.joueur ASC;";
+
+    return parcoursRs(SQLSelect($sql));
+}
+
+
+//Met à jour l'emplacement d'une action dans la tierlist 
+//Si l'action est déjà dans contenu_tierlist pour cette tierlist, on met à jour le tier et sinon on insère
+//Retourne true si succès sinon false
+function sauvegarderPlacement($idTierlist, $idAction, $tier){
+    /*$tiersValides = ["S", "A", "B", "C", "D"];
+    if(!in_array($tier, $tiersValides)){
+        return false; //Le tier n'est pas bon
+    }*/
+
+    //On vérifie si le placement existe déjà
+    $sqlVerifier = "SELECT COUNT(*) FROM contenu_tierlist WHERE id_tierlist = $idTierlist AND id_action = $idAction;";
+    $existe = SQLGetChamp($sqlVerifier) > 0;
+
+    if($existe){
+        //On met à jour si l'action était déjà placée
+        $sql = "UPDATE contenu_tierlist SET tier = '$tier' WHERE id_tierlist = $idTierlist AND id_action = $idAction;";
+        return SQLUpdate($SQL); ;
+    }
+    else{
+        //On insert un nouveau placement
+        $sql = "INSERT INTO contenu_tierlist (id_tierlist, id_action, tier) VALUES ($idTierlist, $idAction, '$tier');";
+        return SQLInsert($sql);
+    }
+}
+
+
+//Supprime tous les placements d'actions retournées en bibliothèque d'actions, donc un drag and drop mais de la tierlist vers les vidéos 
+//Ou quand on publie, on remet tout dans la bibliothèque
+function supprimerPlacement($idTierlist, $idAction){
+    $sql = "DELETE FROM contenu_tierlist WHERE id_tierlist = $idTierlist AND id_action = $idAction;";
+    return SQLDelete($sql);
+}
+
+
+//Publie un brouillon, donc on passe est_publique à 1 et on met à jour le titre 
+function publierBrouillon($idTierlist, $titre){
+    $titrePropre = htmlspecialchars(trim($titre));
+    if(empty($titrePropre)){
+        $titrePropre = "Sans titre";
+    }
+    $titreSecurise = proteger($titrePropre);
+
+    $sql = "UPDATE tierlist SET est_publique = 1, titre = '$titreSecurise', date_modification = NOW() WHERE id_tierlist = $idTierlist;";
+    
+    return SQLUpdate($sql);
+}
+
+
+//Sauvegarde le titre d'un brouillon et met à jour date_modification
+function mettreAJourTitreBrouillon($idTierlist, $titre){
+    $titrePropre = htmlspecialchars(trim($titre));
+    if(empty($titrePropre)){
+        $titrePropre = "Sans titre";
+    }
+    $titreSecurise = proteger($titrePropre);
+
+    $sql = "UPDATE tierlist SET titre = '$titreSecurise', date_modification = NOW() WHERE id_tierlist = $idTierlist;";
+
+    return SQLUpdate($sql);
+}
+
+
+//Supprime définitivement un brouillon et tout son contenu (contenu_tierlist en cascade)
+function supprimerTierlist($idTierlist){
+    //On suprime le contenu
+    $sql = "DELETE FROM contenu_tierlist WHERE id_tierlist = $idTierlist;";
+    SQLDelete($sql);
+    //Ensuite les likes associés
+    $sql = "DELETE FROM like_tierlist WHERE id_tierlist = $idTierlist;";
+    SQLDelete($sql);
+    //Puis les commentaires
+    $sql = "DELETE FROM commentaire WHERE id_tierlist = $idTierlist;";
+    SQLDelete($sql);
+    //Et enfin la tierlist elle-même
+    $sql = "DELETE FROM tierlist WHERE id_tierlist = $idTierlist;";
+    return SQLDelete($sql); //Nous avons mis le return ici comme c'est le dernier DELETE
+}
+
 ?>

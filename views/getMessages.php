@@ -31,7 +31,7 @@ if($idTierlist && $idUser && $connecte){
 				echo "<div class=\"unCommentaire\" style=\"color:white;\">";
 			}
 			else{
-				echo "<div class=\"unCommentaire\" style=\"color:blue;\">";
+				echo "<div class=\"unCommentaire\" style=\"color:rgba(16, 27, 58, 0.7);\">";
 			}
 			echo "<p class=\"auteur\">" . htmlspecialchars($nextCommentaire["pseudo"]) . "</p>"; 
 			echo "<p class=\"leContenu\">" . stripslashes($nextCommentaire["contenu"]) . "</p>"; //On enlève les \ des messages grâce à cette fonction stripslashes() comme ça on remet ceux enlevr par addsashes mais c'est plus sécuriser que de ne pas faire de addslashes
@@ -53,7 +53,7 @@ else{
 	<?php 
 	if($connecte && $idUser && $idTierlist){
 		echo "<form action=\"../controleur.php\" method=\"GET\" target=\"_parent\">"; //target="_parent" permet que le navigateur recharge la vue detail_tierlist (le parent) et pas le petit block de l'iframe
-		echo "<input type=\"hidden\" name=\"idTierlist\" value=\"<?=$idTierlist?>\">";
+		echo "<input type=\"hidden\" name=\"idTierlist\" value=$idTierlist>";
 		echo "<input type=\"text\" name=\"nvCommentaire\" id=\"monCommentaire\" placeholder=\"Ajoutez un commentaire\" maxlength=\"500\">";
 		echo "<button type=\"submit\" name=\"action\" value=\"Envoyer\">Envoyer</button>";
 		echo "</form>";

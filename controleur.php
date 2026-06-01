@@ -60,8 +60,65 @@ session_start();
 			if(($idTierlist = valider("idTierlist")) && ($idUser = valider("idUser", "SESSION"))){
         		enregistrerVoteLike($idTierlist, $idUser);
     		}
-    		$addArgs = array("view" => "detail_tierlist", "idTierlist" => $idTierlist);
+    		$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
 			break;
+
+		
+        case 'SauvegarderCreation' :
+            if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+				$titre = valider("titre");
+				if(!$titre){ 
+    				$titre = "Sans titre";
+				}
+                mettreAJourTitreBrouillon($idTierlist, $titre);
+				if(valider("placements", "GET") && is_array($_GET["placements"])){
+                    foreach($_GET["placements"] as $idAction=>$tier){
+                        if($tier === "BIBLIO"){
+                            supprimerPlacement($idTierlist, $idAction);
+                        }
+                        else{
+                            sauvegarderPlacement($idTierlist, $idAction, $tier);
+                        }
+                    }
+                }
+            }
+            $addArgs = array("view"=>"creation", "idTierlist"=>$idTierlist);
+            break;
+
+           
+            case 'PublierTierlist' :
+                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+					$titre = valider("titre");
+					if(!$titre){ 
+    					$titre = "Sans titre";
+					}
+
+                    if(valider("placements", "GET") && is_array($_GET["placements"])){
+                        foreach($_GET["placements"] as $idAction => $tier){
+                            if($tier === "BIBLIO"){
+                                supprimerPlacement($idTierlist, $idAction);
+                            }
+                            else{
+                                sauvegarderPlacement($idTierlist, $idAction, $tier);
+                            }
+                        }
+                    }
+
+                    publierBrouillon($idTierlist, $titre);
+					$addArgs = array("view"=>"detail_tierlist", "idTierlist"=>$idTierlist);
+                }
+                else{
+                    $addArgs = array("view"=>"galerie");
+                }
+            	break;
+
+        
+            case 'SupprimerBrouillon' :
+                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+                    supprimerTierlist($idTierlist);
+                }
+                $addArgs = array("view"=>"brouillon");
+            break;
 
 		}
 	}
