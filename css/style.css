@@ -377,30 +377,20 @@ body {
 
 /*POUR LA VUE GALERIE*/
 
-/*l'en-tête de la page*/
-.titre-galerie {
-    color: #2c166d;
-    font-weight: bold;
-}
-
-.texte-intro {
-    color: #ffffff;
-}
-
 /*le bloc de la barre de recherche*/
-.bloc-recherche-galerie {
+.rechercheGalerie {
     margin-top: 20px;
     margin-bottom: 40px;
 }
 
-.input-recherche {
+.inputRecherche {
     border-radius: 10px;
     height: 40px;
     border: none;
 }
 
 /*style appliqué au menu déroulant généré par mkSelect*/
-.bloc-recherche-galerie select {
+.rechercheGalerie select {
     border-radius: 10px;
     height: 40px;
     border: none;
@@ -410,7 +400,7 @@ body {
     background-color: #ffffff;
 }
 
-.bouton-filtrer {
+.boutonFiltrer {
     background-color: #2c166d;
     border: none;
     font-weight: bold;
@@ -419,11 +409,11 @@ body {
 }
 
 /*les cartes individuelles des tierlists*/
-.colonne-carte {
+.colonneCarte {
     margin-bottom: 30px;
 }
 
-.carte-tierlist {
+.carteTierlist {
     background-color: #dedede;
     border-radius: 15px;
     padding: 15px;
@@ -437,20 +427,20 @@ body {
 }
 
 /*ses informations sous l'image (likes, titre, auteur)*/
-.infos-tierlist {
+.infosTierlist {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.texte-likes {
+.texteLikes {
     font-weight: bold;
     color: #333;
     font-size: 16px;
     white-space: nowrap;
 }
 
-.lien-titre {
+.lienTitre {
     color: #333;
     text-decoration: none;
     font-size: 14px;
@@ -461,19 +451,19 @@ body {
     margin-left: 10px;
 }
 
-.lien-titre:hover {
+.lienTitre:hover {
     text-decoration: none;
     color: #333;
 }
 
-.texte-auteur {
+.texteAuteur {
     font-size: 11px;
     color: #666;
     text-align: right;
     margin-top: 5px;
 }
 
-.message-vide {
+.messageVide {
     color: #ffffff;
     font-size: 18px;
     margin-top: 50px;
