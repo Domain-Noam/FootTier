@@ -96,17 +96,21 @@ session_start();
 
 			/*POUR LA VUE BROUILLON*/
 
-			case 'SupprimerTierlist':
-			if (valider("connecte", "SESSION")) {
-				$idTierlist = valider("id_tierlist", "GET");
-				if ($idTierlist != false) {
-					// Appel de la fonction du modèle
-					supprimerTierlist($idTierlist);
+			case 'SupprimerBrouillon' :
+                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+                    supprimerTierlist($idTierlist);
+                }
+                $addArgs = array("view"=>"brouillon");
+            break;
+
+			case 'ReprendreCreation' :
+				if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
+					$addArgs = array("view"=>"creation", "idTierlist"=>$idTierlist);
 				}
-			}
-			// On redirige vers la vue brouillon une fois la suppression terminée
-			$addArgs = array("view" => "brouillon");
-			break;
+				else{
+					$addArgs = array("view"=>"connexion", "msg"=>"Il faut se connecter");
+				}
+				break;
 
 
 			/*POUR LA VUE DETAIL_TIERLIST*/
@@ -176,14 +180,6 @@ session_start();
                     $addArgs = array("view"=>"galerie");
                 }
             	break;
-
-        
-            case 'SupprimerBrouillon' :
-                if(($idUser = valider("idUser","SESSION")) && ($idTierlist = valider("idTierlist"))){
-                    supprimerTierlist($idTierlist);
-                }
-                $addArgs = array("view"=>"brouillon");
-            break;
 
 		}
 	}

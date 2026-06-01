@@ -8,7 +8,8 @@ if(basename($_SERVER["PHP_SELF"]) != "index.php"){
 securiser('index.php?view=connexion');
 
 //Si idTierlist est passé par l'URL en method="GET", on reprend un brouillon existant et sinon, on crée un nouveau brouillon vide automatiquement
-$idTierlist = valider("idTierlist", "GET");
+$idTierlist = valider("idTierlist");
+$idUser = valider("idUser", "SESSION");
 
 if(!$idTierlist){
     $idTierlist = creerNouveauBrouillon($idUser, "Sans titre");
@@ -73,8 +74,8 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
             ?>
             </div>
             <div class="boutons">
-                <button type="submit" name="action" value="SauvegarderCreation" class="btn btn-primary btn-valider-admin" onclick="synchroniserFormulaire()">Sauvegarder</button>
-                <button type="submit" name="action" value="PublierTierlist" class="btn btn-primary btn-valider-admin" onclick="synchroniserFormulaire()">Partager</button>
+                <button type="submit" name="action" value="SauvegarderCreation" class="btn btn-primary btnValider" onclick="synchroniserFormulaire()">Sauvegarder</button>
+                <button type="submit" name="action" value="PublierTierlist" class="btn btn-primary btnValider" onclick="synchroniserFormulaire()">Partager</button>
             </div>
         </div>
 

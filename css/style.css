@@ -295,7 +295,7 @@ body {
 
 /*Pour le titre de toutes les vues*/
 
-.titreCreation, .titreBrouillon, .titreAdmin, .titreGalerie, .titreDetail {
+.titreCreation, .titreBrouillons, .titreAdmin, .titreGalerie, .titreDetail {
     margin: 0;
     color: #2c166d;
     font-size: 30px;
@@ -369,7 +369,7 @@ body {
     font-weight: bold;
     padding: 3px 10px;
 }
-.btn-valider-admin {
+.btnValider {
     border-radius: 20px;
     font-weight: bold;
     padding: 8px 30px;
@@ -430,7 +430,7 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.image-tierlist {
+.imageTierlist {
     width: 100%;
     border-radius: 8px;
     margin-bottom: 15px;
@@ -481,7 +481,7 @@ body {
 
 /*POUR LA VUE BROUILLON*/
 
-.carte-brouillon {
+.leBrouillon {
     background-color: #dedede;
     border-radius: 15px;
     padding: 15px;
@@ -491,8 +491,7 @@ body {
     gap: 15px;
 }
 
-/*la fausse miniature de tierlist (à gauche) : reproduction de tierlist plutôt qu'utiliser une image */
-.miniature-tierlist {
+.tierlistEnPetit {
     flex: 0 0 45%; 
     display: flex;
     flex-direction: column;
@@ -502,8 +501,8 @@ body {
     border-radius: 8px;
 }
 
-/*les lignes de couleur de la miniature */
-.mini-ligne {
+/*les lignes de couleur de la petite tierlist*/
+.PetiteLigne {
     display: flex;
     align-items: center;
     height: 18px;
@@ -512,7 +511,7 @@ body {
     background-color: #1a1a1a; 
 }
 
-.mini-label {
+.labelS, .labelA, .labelB, .labelC, .labelD {
     width: 25px;
     height: 100%;
     display: flex;
@@ -524,32 +523,38 @@ body {
 }
 
 /*couleurs des tiers */
-.bg-tier-s {
+.tierS, .tierA, .tierB, .tierC, .tierD {
+    flex:1;
+    opacity:0.6;
+    height:100%;
+    margin-left:2px;
+}
+
+.tierS {
     background-color: #c0392b;
 }
-.bg-tier-a {
+.tierA {
     background-color: #d35400;
 }
-.bg-tier-b {
+.tierB {
     background-color: #f1c40f;
-    color: #333;
 }
-.bg-tier-c {
+.tierC {
     background-color: #27ae60;
 }
-.bg-tier-d {
+.tierD {
     background-color: #2980b9;
 }
 
 /*la partie droite de la carte (texte + boutons)*/
-.infos-brouillon {
+.infosDuBrouillon {
     flex: 1;
     display: flex;
     flex-direction: column;
     min-width: 0; /*pour laisser les éléments dans la boîte*/
 }
 
-.titre-brouillon {
+.titreDuBrouillon {
     font-weight: bold;
     color: #333;
     font-size: 18px;
@@ -560,14 +565,14 @@ body {
     text-overflow: ellipsis; /* ajoute ... à la fin pour montrer que le texte est coupé mais qu'il en reste */
 }
 
-.date-brouillon {
+.dateDuBrouillon {
     font-size: 12px;
     font-weight: bold;
     color: #000;
     margin-bottom: 15px;
 }
 
-.btn-brouillon {
+.btnBrouillon {
     border-radius: 5px;
     font-weight: bold;
     font-size: 12px;
