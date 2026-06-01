@@ -77,6 +77,7 @@ function coeurRouge(){
 }
 
 
+
 /*POUR LA VUE CRÉATION DE TIERLIST*/
 //On utilise l'API native de HTML5 avec dragstart, dragover, drop
 //Pour mieux comprendre la différence compliqué entre drop et dragend : drop s'occupe de la destination, tandis que dragend s'occupe de l'objet déplacé
@@ -190,3 +191,7 @@ document.addEventListener("DOMContentLoaded", function(){ //On retire le survol 
         });
     });
 });
+
+
+
+

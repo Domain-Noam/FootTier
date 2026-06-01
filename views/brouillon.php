@@ -18,9 +18,9 @@ $idUser = $_SESSION["idUser"];
 $brouillons = getBrouillonsUtilisateur($idUser);
 ?>
 
-<div class="page-header">
-  <h1 class="titre-principal">Mes brouillons</h1>
-</div>
+
+<h1 class="titreBrouillon">Mes brouillons</h1>
+
 
 <div class="row">
     <?php

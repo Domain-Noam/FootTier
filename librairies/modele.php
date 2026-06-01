@@ -126,7 +126,7 @@ function rechercheTierlistsParPseudo($pseudo){
 //Paramètre : $idUser l'identifiant de l'utilisateur connecté
 //Retourne la liste des brouillons en cours d'édition
 function getBrouillonsUtilisateur($idUser){
-    $sql = "SELECT t.titre, t.date_modification, COUNT(ct.id_action) AS nb_actions_sauvegardees FROM tierlist t JOIN contenu_tierlist AS ct ON t.id_tierlist = ct.id_tierlist
+    $sql = "SELECT t.id_tierlist, t.titre, t.date_modification, COUNT(ct.id_action) AS nb_actions_sauvegardees FROM tierlist t JOIN contenu_tierlist AS ct ON t.id_tierlist = ct.id_tierlist
             WHERE t.id_user = $idUser AND t.est_publique = 0
             GROUP BY t.id_tierlist, t.titre, t.date_modification
             ORDER BY t.date_modification DESC;";

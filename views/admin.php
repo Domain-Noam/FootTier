@@ -15,12 +15,7 @@ if (!valider("connecte", "SESSION") || valider("admin", "SESSION") != 1) {
 }
 ?>
 
-<div class="page-header">
-  <h1 class="titre-principal">Panneau d'administration</h1>
-</div>
-<p class="lead texte-intro">
-  Ce panneau est réservé aux administrateurs pour la gestion des membres et du contenu de la communauté FootTier.
-</p>
+<h1 class="titreAdmin">Panneau d'administration</h1>
 
 <div class="bloc-admin">
     <h3 class="titre-admin">Liste des Utilisateurs</h3>
@@ -115,7 +110,7 @@ $valMedia = false;
                 <div class="form-group">
                     <label class="titre-principal">Catégorie :</label>
                     <?php
-                    $tabCat = array(array("id" => "", "label" => "-- Sélectionner une catégorie --"));
+                    $tabCat = array(array("id" => "", "label" => "Sélectionner une catégorie"));
                     if (isset($categories) && is_array($categories)) {
                         foreach($categories as $cat) {
                             $tabCat[] = array("id" => $cat['id_categorie'], "label" => htmlspecialchars($cat['nom_categorie']));
@@ -133,7 +128,7 @@ $valMedia = false;
                     <label class="titre-principal">Sélectionner une image :</label>
                     <?php
                     $dossierImages = is_dir("ressources/images") ? "ressources/images" : "ressources/img";
-                    $tabImages = array(array("chemin" => "", "nom" => "-- Choisir un fichier image --"));
+                    $tabImages = array(array("chemin" => "", "nom" => "Choisir un fichier image"));
                     if (is_dir($dossierImages)) {
                         foreach (scandir($dossierImages) as $fichier) {
                             if ($fichier != "." && $fichier != "..") {
@@ -151,7 +146,7 @@ $valMedia = false;
                     <label class="titre-principal">Sélectionner un média :</label>
                     <?php
                     $dossierMedias = "ressources/medias";
-                    $tabMedias = array(array("chemin" => "", "nom" => "-- Choisir un fichier vidéo/gif --"));
+                    $tabMedias = array(array("chemin" => "", "nom" => "Choisir un fichier vidéo/gif"));
                     if (is_dir($dossierMedias)) {
                         foreach (scandir($dossierMedias) as $fichier) {
                             if ($fichier != "." && $fichier != "..") {

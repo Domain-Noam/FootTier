@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 26 mai 2026 à 16:20
+-- Généré le : lun. 01 juin 2026 à 09:16
 -- Version du serveur : 10.11.14-MariaDB-0ubuntu0.24.04.1
 -- Version de PHP : 8.3.6
 
@@ -31,7 +31,7 @@ CREATE TABLE `action_foot` (
   `id_action` int(11) NOT NULL,
   `joueur` varchar(100) NOT NULL,
   `competition` varchar(100) NOT NULL,
-  `url_media` varchar(255) DEFAULT '',
+  `url_media` varchar(255) NOT NULL,
   `id_categorie` int(11) NOT NULL,
   `url_image` varchar(255) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -60,7 +60,7 @@ INSERT INTO `action_foot` (`id_action`, `joueur`, `competition`, `url_media`, `i
 (17, 'Xabi Alonso', 'Afrique du Sud 2010', '', 5, ''),
 (18, 'Ronaldo R9', 'France 1998', '', 10, ''),
 (19, 'Pelé', 'Mexique 1970', '', 9, ''),
-(20, 'Kylian Mbappé', 'Qatar 2022', '', 7, '');
+(21, 'Kylian Mbappé', 'Qatar 2022', 'ressources/medias/mbappe2022.mp4', 2, 'ressources/img/mbappe2022.jpg');
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,8 @@ CREATE TABLE `commentaire` (
 --
 
 INSERT INTO `commentaire` (`id_commentaire`, `contenu`, `date_publication`, `id_user`, `id_tierlist`) VALUES
-(1, 'Super tierlist !', '2026-04-11 08:30:00', 1, 1);
+(1, 'Super tierlist !', '2026-04-11 08:30:00', 1, 1),
+(7, 'super !', '2026-05-29 18:15:19', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -168,15 +169,17 @@ CREATE TABLE `tierlist` (
   `est_publique` tinyint(1) DEFAULT 0,
   `date_creation` datetime DEFAULT current_timestamp(),
   `date_modification` datetime DEFAULT current_timestamp(),
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `id_categorie` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `tierlist`
 --
 
-INSERT INTO `tierlist` (`id_tierlist`, `titre`, `est_publique`, `date_creation`, `date_modification`, `id_user`) VALUES
-(1, 'Mes buts de CDM préférés', 1, '2026-04-10 14:23:00', '2026-04-10 15:01:00', 1);
+INSERT INTO `tierlist` (`id_tierlist`, `titre`, `est_publique`, `date_creation`, `date_modification`, `id_user`, `id_categorie`) VALUES
+(1, 'Mes buts de CDM préférés', 1, '2026-04-10 14:23:00', '2026-04-10 15:01:00', 1, NULL),
+(2, 'Mes buts de CDM préférés', 0, '2026-04-10 14:23:00', '2026-04-10 15:01:00', 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -198,7 +201,8 @@ CREATE TABLE `utilisateur` (
 
 INSERT INTO `utilisateur` (`id_user`, `pseudo`, `mot_de_passe`, `est_admin`, `date_inscription`) VALUES
 (1, 'admin', '$2y$10$u5QwGl3yvYG5N7E1uF3zVuVF6YHGLKl1Yd3IZoFJYbKkfH1uXOMWe', 1, '2026-05-19 09:16:16'),
-(2, 'admin2', '$2y$10$.zHmHEk8Df6bfcrsoLaJoeVQkA2IcqBhi1b3oFe5KNK8ZvaNhAmYq', 1, '2026-05-26 18:18:27');
+(5, 'noam', '$2y$10$ugzXLsVGCcC11syGS/0RYO74URqE3tg5j5mNn0VQ/cQhiw4VDpYDS', 0, '2026-05-26 23:24:16'),
+(7, 'admin2', '$2y$10$NCeIK6F2qx01SYPKOEzJY.q7UgacDT2kR0MuktAWS4.rEbB2no5Fi', 1, '2026-05-30 11:28:30');
 
 --
 -- Index pour les tables déchargées
@@ -244,7 +248,8 @@ ALTER TABLE `like_tierlist`
 --
 ALTER TABLE `tierlist`
   ADD PRIMARY KEY (`id_tierlist`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_categorie` (`id_categorie`);
 
 --
 -- Index pour la table `utilisateur`
@@ -261,7 +266,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `action_foot`
 --
 ALTER TABLE `action_foot`
-  MODIFY `id_action` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_action` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `categorie`
@@ -273,19 +278,19 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `tierlist`
 --
 ALTER TABLE `tierlist`
-  MODIFY `id_tierlist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tierlist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées
@@ -295,7 +300,8 @@ ALTER TABLE `utilisateur`
 -- Contraintes pour la table `action_foot`
 --
 ALTER TABLE `action_foot`
-  ADD CONSTRAINT `action_foot_ibfk_1` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`);
+  ADD CONSTRAINT `action_foot_ibfk_1` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`),
+  ADD CONSTRAINT `action_foot_ibfk_2` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`);
 
 --
 -- Contraintes pour la table `commentaire`
@@ -322,7 +328,9 @@ ALTER TABLE `like_tierlist`
 -- Contraintes pour la table `tierlist`
 --
 ALTER TABLE `tierlist`
-  ADD CONSTRAINT `tierlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id_user`);
+  ADD CONSTRAINT `tierlist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id_user`),
+  ADD CONSTRAINT `tierlist_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id_user`),
+  ADD CONSTRAINT `tierlist_ibfk_3` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

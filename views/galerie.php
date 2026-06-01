@@ -4,17 +4,10 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php") {
 	header("Location:../index.php");
 	die("");
 }
-
-//inclusion de la librairie des formulaires du professeur
 include_once "librairies/maLibForms.php";
 ?>
 
-<div class="page-header">
-  <h1 class="titre-galerie">La Galerie des Tierlists de la Communauté</h1>
-</div>
-<p class="lead texte-intro">
-  Découvrez, cherchez et soutenez les meilleures tierlists créées par les membres de FootTier.
-</p>
+<h1 class="titreGalerie">La Galerie des Tierlists de la Communauté</h1>
 
 <div class="bloc-recherche-galerie">
     
@@ -24,13 +17,13 @@ include_once "librairies/maLibForms.php";
     <div class="row">
         <div class="col-md-3">
             <?php 
-            mkInput("text", "joueur", valider("joueur", "GET"), "class=\"form-control input-recherche\" placeholder=\"🔍 Joueur (Ex: Mbappé)\""); 
+            mkInput("text", "joueur", valider("joueur", "GET"), "class=\"form-control input-recherche\" placeholder=\"Joueur (Ex: Mbappé)\""); 
             ?>
         </div>
         
         <div class="col-md-3">
             <?php 
-            mkInput("text", "pseudo", valider("pseudo", "GET"), "class=\"form-control input-recherche\" placeholder=\"👤 Créateur (Ex: admin)\""); 
+            mkInput("text", "pseudo", valider("pseudo", "GET"), "class=\"form-control input-recherche\" placeholder=\"Créateur\""); 
             ?>
         </div>
 

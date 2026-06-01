@@ -4,7 +4,6 @@ session_start();
 include_once("../librairies/maLibUtils.php");
 include_once("../librairies/modele.php");
 
-
 $idTierlist = valider("idTierlist", "GET");
 $connecte = valider("connecte", "SESSION");
 $idUser = valider("idUser", "SESSION");
