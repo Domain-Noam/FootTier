@@ -43,6 +43,8 @@ $contenuParTier = getContenuTierlist($idTierlist); //On récupère le contenu de
 
 $actionsDispo = getActionsRestantes($idTierlist); //On récupère toutes les actions que le brouillon n'a pas déjà 
 
+$categories = getCategories();
+
 //Comme pour la vue detail_tierlist, on fait un tableau de tiers pour pouvoir écrire les lettres et un tableau de couleur pour correspondre et que ce soit mieux designer, comme sur le mockup
 $tiers = ["S", "A", "B", "C", "D"];
 $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"=>"#1b7bcf"];
@@ -61,8 +63,19 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
         <!--Ligne du haut avec le titre, le type et les boutons sauvegarder (est_publique reste à 0) et partager (est_publique passe à 1)-->
         <div class="barreHaut">
             <input type="text" name="titre" id="titreTierlistInput" class="inputTitre" placeholder="Nom de la tierlist" value="<?=htmlspecialchars((string)$infosTierlist["titre"])?>" maxlength="150">
-            <input type="text" name="type" id="typeTierlistInput" class="inputType" placeholder="Type de tierlist" value="<?=htmlspecialchars((string)$infosTierlist["nom_categorie"])?>" maxlength="100">
-            <!--le (string) ajouté avant $infosTierlist permet d'éviter un affichage bizarre comme ça : "<br /><b>Deprecated</b>:  htmlspecialchars..." car htmlspecialchars n'accepte pas la valeur NULL donc il faut forcer que ce soit un string, donc s'il y a rien ça équivo à ""-->           
+            <div class="inputType">
+            <?php
+            $tabCat = array();
+            $tabCat[] = array("id" => "", "label" => "Catégorie (Toutes)");
+            
+            if ($categories != false) {
+                foreach($categories as $cat) {
+                    $tabCat[] = array("id" => $cat['id_categorie'], "label" => $cat['nom_categorie']);
+                }
+            }
+            mkSelect("categorie", $tabCat, "id", "label", valider("categorie"));
+            ?>
+            </div>
             <button type="submit" name="action" value="SauvegarderCreation" class="btnSauvegarder" onclick="synchroniserFormulaire()">Sauvegarder</button>
             <button type="submit" name="action" value="PublierTierlist" class="btnPartager" onclick="synchroniserFormulaire()">Partager</button>
         </div>
@@ -83,7 +96,7 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                     if(!empty($contenuParTier[$tier])){
                         foreach($contenuParTier[$tier] as $vignette){
                             //On reprend le brouillon s'il n'est pas vide et on place les vignettes déjà mises 
-                            echo "<div class=\"vignetteCreation\" draggable=\"true\" id=\"vignette-" . $vignette["id_action"] . "\" data-id-action=\"" . $vignette["id_action"] . "\" ondragstart=\"commencerGlisser(event)\">";
+                            echo '<div class="vignetteCreation" draggable="true" id="vignette-' . $vignette["id_action"] . '" data-id-action="' . $vignette["id_action"] . '" ondragstart="commencerGlisser(event)">';
                             if(!empty($vignette["url_image"])){
                                 echo "<img src=\"" . htmlspecialchars($vignette["url_image"]) . "\" alt=\"" . htmlspecialchars($vignette["joueur"]) . "\">";
                             }

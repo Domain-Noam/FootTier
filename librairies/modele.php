@@ -73,7 +73,7 @@ function getPopulariteTierlists(){
 //Paramètre : $idTierlist l'identifiant de la tierlist à charger
 //Retourne un tableau contenant les actions classées par Tier et triées de S à D
 function getContenuTierlist($idTierlist){
-    $sql = "SELECT ct.tier, af.joueur, af.competition, af.url_image, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
+    $sql = "SELECT ct.tier, ct.id_action, af.joueur, af.competition, af.url_image, c.nom_categorie FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action JOIN categorie AS c ON af.id_categorie = c.id_categorie
             WHERE ct.id_tierlist = $idTierlist ORDER BY ct.tier ASC, af.competition DESC;";
 
     $lignes = parcoursRs(SQLSelect($sql));
@@ -353,7 +353,7 @@ function sauvegarderPlacement($idTierlist, $idAction, $tier){
     if($existe){
         //On met à jour si l'action était déjà placée
         $sql = "UPDATE contenu_tierlist SET tier = '$tier' WHERE id_tierlist = $idTierlist AND id_action = $idAction;";
-        return SQLUpdate($SQL); ;
+        return SQLUpdate($sql); ;
     }
     else{
         //On insert un nouveau placement

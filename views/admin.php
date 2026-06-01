@@ -10,9 +10,13 @@ include_once "librairies/maLibForms.php";
 
 //sécurité : vérification des droits d'accès
 if (!valider("connecte", "SESSION") || valider("admin", "SESSION") != 1) {
-    echo '<div class="alert alert-danger text-center"><strong>Accès refusé !</strong> Vous devez être administrateur.</div>';
+    echo '<div class="alert alert-danger text-center"><strong>Accès refusé !</strong> Vous devez être administrateur</div>';
     return;
 }
+
+$utilisateurs = getUtilisateurs();
+$categories = getCategories();
+$actions = getActions();
 ?>
 
 <h1 class="titreAdmin">Panneau d'administration</h1>
@@ -74,36 +78,31 @@ if (!valider("connecte", "SESSION") || valider("admin", "SESSION") != 1) {
 </div>
 
 <?php
-//le formulaire est configuré uniquement en mode ajout
-$titreFormulaire = "Ajouter une action";
 $cibleFormulaire = "controleur.php?action=AjouterAction";
 $texteBouton = "Ajouter l'action";
 
-//variables vides par défaut pour l'ajout
-$valJoueur = "";
-$valComp = "";
 $valCat = false;
 $valImg = false;
 $valMedia = false;
 ?>
 
 <div class="bloc-admin" id="ancre-formulaire">
-    <h3 class="titre-admin"><?php echo $titreFormulaire; ?></h3>
+    <h3 class="titre-admin"><?php echo "Ajouter une action"; ?></h3>
     
     <div class="fond-blanc-form">
-        <?php mkForm($cibleFormulaire, "POST"); ?>
+        <?php mkForm("Ajouter une action", "GET"); ?>
         
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="titre-principal">Joueur :</label>
-                    <?php mkInput("text", "joueur", $valJoueur, "class=\"form-control\" placeholder=\"Ex: Kylian Mbappe\" required"); ?>
+                    <?php mkInput("text", "joueur", "", "class=\"form-control\" placeholder=\"Ex: Kylian Mbappe\" required"); ?>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="titre-principal">Compétition :</label>
-                    <?php mkInput("text", "competition", $valComp, "class=\"form-control\" placeholder=\"Ex: Russie 2018\" required"); ?>
+                    <?php mkInput("text", "competition", "", "class=\"form-control\" placeholder=\"Ex: Russie 2018\" required"); ?>
                 </div>
             </div>
             <div class="col-md-4">

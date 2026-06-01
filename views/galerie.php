@@ -5,6 +5,25 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php") {
 	die("");
 }
 include_once "librairies/maLibForms.php";
+
+$rechercheJoueur = valider("joueur");
+$recherchePseudo = valider("pseudo");
+$rechercheCat = valider("categorie");
+$categories = getCategories();
+
+if($rechercheJoueur != false){
+	$tierlists = RechercheTierlistsParJoueur($rechercheJoueur);
+} 
+else if($recherchePseudo != false){
+    $tierlists = rechercheTierlistsParPseudo($recherchePseudo);
+} 
+else if($rechercheCat != false){
+	$tierlists = rechercheTierlistsParCategorie($rechercheCat);
+}
+else{
+	$tierlists = getPopulariteTierlists();
+}
+
 ?>
 
 <h1 class="titreGalerie">La Galerie des Tierlists de la Communauté</h1>
@@ -29,7 +48,7 @@ include_once "librairies/maLibForms.php";
 
         <div class="col-md-4">
             <?php
-            //préparation du tableau d'options pour alimenter la fonction mkSelect
+            //On réalise le select pour les catégories
             $tabCat = array();
             $tabCat[] = array("id" => "", "label" => "Catégorie (Toutes)");
             
@@ -38,7 +57,6 @@ include_once "librairies/maLibForms.php";
                     $tabCat[] = array("id" => $cat['id_categorie'], "label" => $cat['nom_categorie']);
                 }
             }
-            //génération de la liste déroulante avec l'outil du professeur
             mkSelect("categorie", $tabCat, "id", "label", valider("categorie", "GET"));
             ?>
         </div>

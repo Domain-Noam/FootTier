@@ -765,7 +765,7 @@ body {
 }
 
 /*Le champ type de la tierlist*/
-.inputType {
+/*.inputType {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 4px;
@@ -773,6 +773,22 @@ body {
     color: #ffffff;
     font-size: 13px;
     width: 180px;
+}*/
+
+.inputType select {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+    padding: 10px 16px;
+    color: #ffffff;
+    font-size: 13px;
+    width: 180px;
+    cursor: pointer;
+}
+
+.inputType select option {
+    background-color: #5e5d7a; /* Fond sombre pour le menu déroulant */
+    color: #ffffff;
 }
 
 .inputType::placeholder {
