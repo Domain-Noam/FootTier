@@ -8,7 +8,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 $msg=valider("msg");
 if($msg){
-  echo $msg;
+  echo "<div class=\"alert alert-danger text-center\">$msg</div>";
 }
 
 //Chargement eventuel des données en cookies

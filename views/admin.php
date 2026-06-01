@@ -8,14 +8,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 include_once "librairies/maLibForms.php";
 
-//sécurité : vérification des droits d'accès
-if (!valider("connecte", "SESSION") || valider("admin", "SESSION") != 1) {
-    echo '<div class="alert alert-danger text-center"><strong>Accès refusé !</strong> Vous devez être administrateur</div>';
-    return;
-}
-
 if (!valider("admin", "SESSION")) {
-	header("Location:index.php?view=connexion&msg=" . urlencode("Compte admin nécessaire"));
+	header("Location:index.php?view=connexion&msg=" . urlencode("Accès refusé ! Vous devez être administrateur"));
 	die("");
 }
 
