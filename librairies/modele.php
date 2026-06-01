@@ -60,9 +60,11 @@ function isAdmin($idUser)
 //Récupère les tierlists publiques les plus populaires (triées par nombre de likes)
 //Retourne un tableau de tableaux associatifs contenant les infos des tierlists qui sont triées selon le nombre de likes dans le tableau
 function getPopulariteTierlists(){
-
-    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation, COUNT(lt.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS lt ON t.id_tierlist = lt.id_tierlist
-            WHERE t.est_publique = 1 GROUP BY t.id_tierlist, t.titre, u.pseudo, t.date_creation ORDER BY nb_likes DESC, t.date_creation DESC;";
+    //on fait un left join pour récupérer les tierlists même avec 0 like
+    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, t.date_creation, COUNT(l.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user LEFT JOIN like_tierlist AS l ON t.id_tierlist = l.id_tierlist
+            WHERE t.est_publique = '1' 
+            GROUP BY t.id_tierlist, t.titre, u.pseudo, t.date_creation 
+            ORDER BY nb_likes DESC, t.date_creation DESC;";
     
     return parcoursRs(SQLSelect($sql));
 }
@@ -99,8 +101,9 @@ function getCommentairesTierlist($idTierlist){
 //Paramètre : $nomJoueur le nom exact du joueur recherché
 //Retourne la liste des tierlists correspondantes
 function RechercheTierlistsParJoueur($nomJoueur){
-    $sql = "SELECT t.titre, u.pseudo AS createur, t.date_creation FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user
-            WHERE t.est_publique = 1 AND t.id_tierlist IN (SELECT ct.id_tierlist FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action WHERE af.joueur = $nomJoueur)
+    //ajout de t.id_tierlist et sécurisation de la variable dans le LIKE
+    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, t.date_creation FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user
+            WHERE t.est_publique = '1' AND t.id_tierlist IN (SELECT ct.id_tierlist FROM contenu_tierlist AS ct JOIN action_foot AS af ON ct.id_action = af.id_action WHERE af.joueur LIKE '%$nomJoueur%')
             ORDER BY t.date_creation DESC;";
 
     return parcoursRs(SQLSelect($sql));
@@ -207,50 +210,6 @@ function supprimerAction($idAction) {
 }
 
 /*POUR LA VUE DE GALERIE*/ 
-
-//récupère les tierlists publiques les plus populaires (triées par nombre de likes)
-function getPopulariteTierlists(){
-    //on fait un left join pour récupérer les tierlists même avec 0 like
-    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, t.date_creation, COUNT(l.id_user) AS nb_likes 
-            FROM tierlist AS t 
-            JOIN utilisateur AS u ON t.id_user = u.id_user 
-            LEFT JOIN like_tierlist AS l ON t.id_tierlist = l.id_tierlist
-            WHERE t.est_publique = '1' 
-            GROUP BY t.id_tierlist, t.titre, u.pseudo, t.date_creation 
-            ORDER BY nb_likes DESC, t.date_creation DESC;";
-    
-    return parcoursRs(SQLSelect($sql));
-}
-
-//recherche les tierlists publiques contenant au moins une action d'un joueur précis
-function RechercheTierlistsParJoueur($nomJoueur){
-    //ajout de t.id_tierlist et sécurisation de la variable dans le LIKE
-    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, t.date_creation 
-            FROM tierlist AS t 
-            JOIN utilisateur AS u ON t.id_user = u.id_user
-            WHERE t.est_publique = '1' AND t.id_tierlist IN (
-                SELECT ct.id_tierlist
-                FROM contenu_tierlist AS ct
-                JOIN action_foot AS af ON ct.id_action = af.id_action
-                WHERE af.joueur LIKE '%$nomJoueur%'
-            )
-            ORDER BY t.date_creation DESC;";
-
-    return parcoursRs(SQLSelect($sql));
-}
-
-//recherche les tierlists publiques créées par un utilisateur (recherche partielle)
-function rechercheTierlistsParPseudo($pseudo){
-    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, COUNT(l.id_user) AS nb_likes 
-            FROM tierlist AS t 
-            JOIN utilisateur AS u ON t.id_user = u.id_user 
-            LEFT JOIN like_tierlist AS l ON t.id_tierlist = l.id_tierlist
-            WHERE t.est_publique = '1' AND u.pseudo LIKE '%$pseudo%'
-            GROUP BY t.id_tierlist, t.titre, u.pseudo
-            ORDER BY nb_likes DESC;";
-
-    return parcoursRs(SQLSelect($sql));
-}
 
 //recherche les tierlists publiques selon leur catégorie
 function rechercheTierlistsParCategorie($idCat){
