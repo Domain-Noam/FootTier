@@ -451,9 +451,9 @@ body {
     margin-left: 10px;
 }
 
-.lienTitre:hover {
+
+a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions que d'aller chercher l'attribut href pour enlever le lien sous les lettres*/
     text-decoration: none;
-    color: #333;
 }
 
 .texteAuteur {
