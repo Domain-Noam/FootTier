@@ -5,11 +5,7 @@ if(basename($_SERVER["PHP_SELF"]) != "index.php"){
 	die("");
 }
 
-$idUser = valider("idUser", "SESSION");
-if(!$idUser){
-    header("Location:../index.php?view=connexion");
-    die("");
-}
+securiser('index.php?view=connexion');
 
 //Si idTierlist est passé par l'URL en method="GET", on reprend un brouillon existant et sinon, on crée un nouveau brouillon vide automatiquement
 $idTierlist = valider("idTierlist", "GET");
@@ -57,7 +53,7 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
 
     <!--Formulaire qui englobe toute la page pour qu'on puisse tout soumettre d'un coup-->
     <!--Les données du drag & drop sont liées avec les inputs hidden créent par synchroniserFormulaire() en JS-->
-    <form id="formCreation" action="controleur.php" method="GET">
+    <form action="controleur.php" method="GET">
         <input type="hidden" name="idTierlist" value="<?=$idTierlist?>">
 
         <!--Ligne du haut avec le titre, le type et les boutons sauvegarder (est_publique reste à 0) et partager (est_publique passe à 1)-->

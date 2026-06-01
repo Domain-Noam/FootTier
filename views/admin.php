@@ -1,5 +1,5 @@
 <?php
-//sécurité : si la page est appelée directement par son adresse, on redirige vers l'index
+
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
 	header("Location:../index.php");
@@ -7,6 +7,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 
 include_once "librairies/maLibForms.php";
+
+securiser('index.php?view=connexion');
 
 if (!valider("admin", "SESSION")) {
 	header("Location:index.php?view=connexion&msg=" . urlencode("Accès refusé ! Vous devez être administrateur"));
@@ -18,13 +20,13 @@ $categories = getCategories();
 $actions = getActions();
 ?>
 
-<h1 class="titreAdmin">Panneau d'administration</h1>
+<h1 class="titreAdmin">Page d'Administration</h1>
 
-<div class="bloc-admin">
-    <h3 class="titre-admin">Liste des Utilisateurs</h3>
+<div class="DivsAdmin">
+    <h3 class="titreDivs">Liste des Utilisateurs</h3>
     
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-admin">
+    <div class="table-responsive"> <!--nom de class Boostrap-->
+        <table class="table table-striped table-hover table-admin"> <!--nom de class Boostrap-->
             <thead>
                 <tr class="tr-entete">
                     <th>ID User</th>
@@ -36,8 +38,8 @@ $actions = getActions();
             </thead>
             <tbody>
                 <?php
-                if (isset($utilisateurs) && is_array($utilisateurs) && !empty($utilisateurs)) {
-                    foreach ($utilisateurs as $utilisateur) {
+                if(valider($utilisateurs) && is_array($utilisateurs) && !empty($utilisateurs)){
+                    foreach($utilisateurs as $utilisateur){
                         $idUser = $utilisateur['id_user'];
                         $pseudoUser = htmlspecialchars($utilisateur['pseudo']);
                         $dateInscription = htmlspecialchars($utilisateur['date_inscription']);
@@ -76,8 +78,8 @@ $actions = getActions();
     </div>
 </div>
 
-<div class="bloc-admin" id="ancre-formulaire">
-    <h3 class="titre-admin"><?php echo "Ajouter une action"; ?></h3>
+<div class="DivsAdmin">
+    <h3 class="titreDivs">Ajouter une action</h3>
     
     <div class="fond-blanc-form">
         <?php mkForm("Ajouter une action"); ?>
@@ -156,8 +158,8 @@ $actions = getActions();
     </div>
 </div>
 
-<div class="bloc-admin">
-    <h3 class="titre-admin">Gérer les actions existantes</h3>
+<div class="DivsAdmin">
+    <h3 class="titreDivs">Gérer les actions existantes</h3>
     
     <div class="table-responsive">
         <table class="table table-striped table-hover table-admin">

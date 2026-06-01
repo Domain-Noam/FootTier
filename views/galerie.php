@@ -6,6 +6,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php") {
 }
 include_once "librairies/maLibForms.php";
 
+securiser('index.php?view=connexion');
+
 $rechercheJoueur = valider("joueur");
 $recherchePseudo = valider("pseudo");
 $rechercheCat = valider("categorie");

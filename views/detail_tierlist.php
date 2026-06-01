@@ -5,6 +5,8 @@ if(basename($_SERVER["PHP_SELF"]) != "index.php"){
 	die("");
 }
 
+securiser('index.php?view=connexion');
+
 $idTierlist = valider("idTierlist");
 
 if(!$idTierlist){

@@ -293,6 +293,18 @@ body {
     width: 50px;
 }
 
+/*Pour le titre de toutes les vues*/
+
+.titreCreation, .titreBrouillon, .titreAdmin, .titreGalerie, .titreDetail {
+    margin: 0;
+    color: #2c166d;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 /*POUR LA VUE ADMINISTRATION*/
 
 /*titre principal de la paget*/
@@ -302,7 +314,7 @@ body {
 }
 
 /*les 3 divs grises qui contiennent les tableaux et le formulaire*/
-.bloc-admin {
+.DivsAdmin {
     background-color: #dedede;
     border-radius: 20px;
     padding: 25px;
@@ -311,7 +323,7 @@ body {
 }
 
 /*les titres des sous-parties (ex: "Liste des utilisateurs")*/
-.titre-admin {
+.titreDivs {
     color: #2c166d;
     font-weight: bold;
     margin-top: 0;
@@ -339,7 +351,7 @@ body {
 }
 
 /*remplacement du <style> pour les mkSelect, on applique un style similaire à celui de bootstrap*/
-.bloc-admin select {
+.DivsAdmin select {
     display: block;
     width: 100%;
     height: 34px;
@@ -718,17 +730,6 @@ body {
 .pageCreation {
     padding: 20px 30px 40px;
     color: #ffffff;
-}
-
-/*Pour le titre de la vue*/
-.titreCreation, .titreBrouillon, .titreAdmin, .titreGalerie, .titreDetail {
-    margin: 0;
-    color: #2c166d;
-    font-size: 30px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .barreHaut {

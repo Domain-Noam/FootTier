@@ -5,11 +5,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php") {
 	die("");
 }
 
-//sécurité : vérification de la session
-if (!valider("connecte", "SESSION")) {
-    echo '<div class="alert alert-danger text-center">Vous devez être connecté pour voir vos brouillons.</div>';
-    return;
-}
+securiser('index.php?view=connexion');
 
 //récupération de l'ID utilisateur
 $idUser = $_SESSION["idUser"];
