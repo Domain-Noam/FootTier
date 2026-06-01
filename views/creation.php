@@ -76,8 +76,10 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
             mkSelect("categorie", $tabCat, "id", "label", valider("categorie"));
             ?>
             </div>
-            <button type="submit" name="action" value="SauvegarderCreation" class="btnSauvegarder" onclick="synchroniserFormulaire()">Sauvegarder</button>
-            <button type="submit" name="action" value="PublierTierlist" class="btnPartager" onclick="synchroniserFormulaire()">Partager</button>
+            <div class="boutons">
+                <button type="submit" name="action" value="SauvegarderCreation" class="btn btn-primary btn-valider-admin" onclick="synchroniserFormulaire()">Sauvegarder</button>
+                <button type="submit" name="action" value="PublierTierlist" class="btn btn-primary btn-valider-admin" onclick="synchroniserFormulaire()">Partager</button>
+            </div>
         </div>
 
         <!--Centre avec la tierlist à gauche et la bibliothèque à droite-->

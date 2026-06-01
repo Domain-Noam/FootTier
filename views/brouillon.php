@@ -50,11 +50,11 @@ $brouillons = getBrouillonsUtilisateur($idUser);
                         <h3 class="titre-brouillon"><?php echo $titre; ?></h3>
                         <p class="date-brouillon">Modifié le : <br><?php echo $dateModif; ?></p>
                         
-                        <a href="<?php echo $lienReprendre; ?>" class="btn btn-primary btn-brouillon" style="background-color: #4a69bd; border: none;">
+                        <a href="<?php echo $lienReprendre; ?>" class="btn btn-primary btn-brouillon">
                             Continuer la création
                         </a>
                         
-                        <a href="<?php echo $lienSupprimer; ?>" class="btn btn-danger btn-brouillon" style="background-color: #c0392b; border: none;" onclick="return confirmerSuppression(event, 'Supprimer ce brouillon définitivement ?');">
+                        <a href="<?php echo $lienSupprimer; ?>" class="btn btn-danger btn-brouillon" onclick="confirmerSuppression(event, 'Supprimer ce brouillon définitivement ?');">
                             Supprimer
                         </a>
                     </div>

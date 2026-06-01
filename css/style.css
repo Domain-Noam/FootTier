@@ -742,6 +742,13 @@ body {
     gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.boutons {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
 }
 
 /*Le champ titre de la tierlist*/

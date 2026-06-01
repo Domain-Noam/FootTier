@@ -77,20 +77,11 @@ $actions = getActions();
     </div>
 </div>
 
-<?php
-$cibleFormulaire = "controleur.php?action=AjouterAction";
-$texteBouton = "Ajouter l'action";
-
-$valCat = false;
-$valImg = false;
-$valMedia = false;
-?>
-
 <div class="bloc-admin" id="ancre-formulaire">
     <h3 class="titre-admin"><?php echo "Ajouter une action"; ?></h3>
     
     <div class="fond-blanc-form">
-        <?php mkForm("Ajouter une action", "GET"); ?>
+        <?php mkForm("Ajouter une action"); ?>
         
         <div class="row">
             <div class="col-md-4">
@@ -115,7 +106,7 @@ $valMedia = false;
                             $tabCat[] = array("id" => $cat['id_categorie'], "label" => htmlspecialchars($cat['nom_categorie']));
                         }
                     }
-                    mkSelect("id_categorie", $tabCat, "id", "label", $valCat);
+                    mkSelect("id_categorie", $tabCat, "id", "label", false);
                     ?>
                 </div>
             </div>
@@ -135,7 +126,7 @@ $valMedia = false;
                             }
                         }
                     }
-                    mkSelect("url_image", $tabImages, "chemin", "nom", $valImg);
+                    mkSelect("url_image", $tabImages, "chemin", "nom", false);
                     ?>
                 </div>
             </div>
@@ -153,14 +144,14 @@ $valMedia = false;
                             }
                         }
                     }
-                    mkSelect("url_media", $tabMedias, "chemin", "nom", $valMedia);
+                    mkSelect("url_media", $tabMedias, "chemin", "nom", false);
                     ?>
                 </div>
             </div>
         </div>
 
         <div class="text-right" style="margin-top: 20px;">
-            <?php mkInput("submit", "btn_ajouter", $texteBouton, "class=\"btn btn-primary btn-valider-admin\" style=\"background-color: #2c166d; border-color: #2c166d;\""); ?>
+            <?php mkInput("submit", "btn_ajouter", "Ajouter l'action", "class=\"btn btn-primary btn-valider-admin\""); ?>
         </div>
         <?php endForm(); ?>
     </div>
