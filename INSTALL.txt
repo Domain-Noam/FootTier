@@ -62,7 +62,7 @@ C. Système de Drag & Drop (JavaScript)
 D. Lancement des vidéos (Popup interactif)
 - Source : Aide externe ponctuelle et documentation classique (ex : Youtube).
 - Fonctionnement : Par manque de temps et au respect de notre cahier des charges déposée avec nos 3 livrables, nous n'avons pas réalisé de JSON, nous passons directement les informations de la base de données via le PHP vers le JavaScript. Le JS lit ces informations au clic et crée le lecteur vidéo. 
-Avec nos documentation et aide, nous avons alors cherché à trouver un moyen pour quand même travaillé avec un objet, et nous avons découvert en HTML une possibilité avec l'attribut "data-" de stocker des données personnalisées sur un élément, donc nous sur la vidéo.
+Avec nos documentation et aide, nous avons alors cherché à trouver un moyen pour quand même travaillé avec un objet, et nous avons découvert en HTML une possibilité avec l'attribut "data-" de stocker des données personnalisées sur un élément, donc pour nous sur la vidéo.
 
 
 
