@@ -104,7 +104,14 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                             //On utilise "data-" car c'est, selon nos recherches, la bonne pratique 
                             echo "<div class=\"vignetteCreation\" draggable=\"true\" id=\"vignette-" . $idAction . "\" data-id-action=\"" . $idAction . "\" 
                                 data-joueur=\"" . $joueur . "\" data-competition=\"" . $competition . "\" data-categorie=\"" . $categorie . "\" data-image=\"" . $image . "\"  
-                                data-media=\"" . $media . "\" ondragstart=\"commencerGlisser(event)\" onclick=\"ouvrirPopupVideo(this)\"></div>";
+                                data-media=\"" . $media . "\" ondragstart=\"commencerGlisser(event)\" onclick=\"ouvrirPopupVideo(this)\">";
+                            if(!empty($image)){
+                                echo "<img src=\"" . $image . "\" alt=\"" . $joueur . "\">";
+                            }
+                            else{
+                                echo "<div class=\"vignetteVide\"></div>";
+                            }
+                            echo "</div>";
                         }
                     }
                     echo "</div>"; //fin de la div zoneDepot

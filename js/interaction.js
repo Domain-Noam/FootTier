@@ -145,6 +145,42 @@ function validerPlacement(event){ //En lien avec drop pour quand on lâche dans 
     var zoneDest = event.currentTarget; //Zone de destination (la tierlist) 
     zoneDest.appendChild(vignette); //On place physiquement la vignette dans la tierlist
 
+    if(zoneDest.dataset.tier === "BIBLIO"){ 
+        vignette.classList.add("vignetteBiblio");
+        var media = vignette.dataset.media;
+        var joueur = vignette.dataset.joueur;
+        var image = vignette.dataset.image;
+        var html = "";
+        
+        if(media && media !== ""){
+            html += '<video class="mediaVignette" src="' + media + '" autoplay muted loop preload="metadata">';
+            if(image && image !== ""){
+                html += '<img src="' + image + '" alt="' + joueur + '">';
+            }
+            html += '</video>';
+        }
+        else if(image && image !== ""){
+            html += '<img class="mediaVignette" src="' + image + '" alt="' + joueur + '">';
+        }
+        else{
+            html += '<div class="vignetteVide"></div>';
+        }
+        html += '<p class="labelVignette">' + joueur + '</p>';
+        vignette.innerHTML = html;
+        
+    }
+    else{ 
+        vignette.classList.remove("vignetteBiblio");
+        var image = vignette.dataset.image;
+        var joueur = vignette.dataset.joueur;
+        if(image && image !== ""){
+            vignette.innerHTML = '<img src="' + image + '" alt="' + joueur + '">';
+        }
+        else{
+            vignette.innerHTML = '<div class="vignetteVide"></div>';
+        }
+    }
+
     idActionEnCours = null; //On réinitialise car on a fini le drag and drop sur la vidéo, donc on peut le refaire sur une autre
     zoneOrigine = null;
 }
@@ -237,6 +273,8 @@ function ouvrirPopupVideo(element){
         video.src = media;
         video.controls = true; 
         video.autoplay = true; 
+        video.loop = true;
+        video.preload = "metadata";
         conteneurMedia.appendChild(video); 
     } 
     else if(image && image.trim() !== ""){

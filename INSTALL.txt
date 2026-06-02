@@ -1,0 +1,90 @@
+FICHIER D'INSTALLATION - PROJET FOOTTIER
+Groupe 22 : Adrien BERNARD, Noam DOMAIN
+
+Bienvenue dans le guide d'installation de FootTier,
+notre site web de création de TierLists sur le football.
+
+1. PRÉREQUIS
+
+- Un serveur web local (Apache) avec PHP (ex: XAMPP, WAMP, MAMP, ou serveur 
+  Linux classique).
+- Un serveur de base de données MySQL ou MariaDB.
+
+2. INSTALLATION
+
+ÉTAPE 1 : Fichiers de l'application
+1. Décompressez l'archive du projet.
+2. Placez le dossier "FootTier" dans le répertoire racine de votre serveur 
+   web ("/var/www/html/FootTier/" sous Linux).
+
+ÉTAPE 2 : Base de données
+1. Ouvrez un EDI comme Datagrip ou phpMyAdmin (généralement accessible via http://localhost/phpmyadmin).
+2. Créez une nouvelle base de données nommée "FootTier".
+3. Importez le fichier "foottier.sql" (situé à la racine de ce dossier) 
+   dans cette nouvelle base de données. Ce script créera toutes les tables 
+   nécessaires et ajoutera des données de test (actions culturelles, 
+   utilisateurs de test, catégories).
+
+ÉTAPE 3 : Configuration
+1. Ouvrez le fichier "librairies/config.php" avec un éditeur de texte.
+2. Vérifiez que les identifiants de connexion à la base de données 
+   correspondent à votre configuration locale :
+   - Hôte : localhost
+   - Utilisateur : root (par défaut sous XAMPP/WAMP)
+   - Mot de passe : (vide par défaut sous XAMPP, "root" sous MAMP)
+   - Base de données : FootTier
+
+ÉTAPE 4 : Lancement
+1. Ouvrez votre navigateur web.
+2. Accédez à l'URL suivante : http://localhost/FootTier/index.php
+
+
+3. IDENTIFIANTS DE TEST
+
+Pour faciliter la correction et l'exploration de toutes les fonctionnalités, 
+le fichier SQL inclut deux comptes pré-configurés (les mots de passe ont 
+été hachés avec bcrypt en base de données) :
+
+COMPTE ADMINISTRATEUR (Accès à la vue d'administration) :
+- Pseudo : admin
+- Mot de passe : password
+
+COMPTE UTILISATEUR CLASSIQUE :
+- Pseudo : Adri1
+- Mot de passe : password2
+
+- Pseudo : Noam
+- Mot de passe : password3
+
+4. SOURCES ET LIBRAIRIES EXISTANTES (Explications)
+
+Voici les ressources réutilisées et leur 
+fonctionnement :
+
+A. Librairies PHP (issues de nos TP)
+- Fichiers : Dossier /librairies/ (ex: maLibSQL.pdo.php, maLibSecurisation.php)
+- Fonctionnement : Ces fichiers vus en cours nous servent de base pour 
+  communiquer avec la base de données de façon sécurisée (via PDO) et 
+  gérer les utilisateurs connectés (variables de session).
+
+B. Bootstrap (CSS)
+- Fichiers : Dossier Bootstrap de nos TP.
+- Fonctionnement : Nous l'avons utilisé uniquement pour le design (CSS), 
+  sans ses scripts JavaScript. Son système de "grille" et ses classes 
+  "flexbox" nous ont fait gagner beaucoup de temps pour aligner nos blocs 
+  et structurer l'affichage de la galerie.
+
+C. Système de Drag & Drop (JavaScript)
+- Source : Recherches sur l'API native HTML5 (inspiration via Codepen).
+- Fonctionnement : Nous n'avons pas utilisé de librairie externe (comme 
+  jQuery UI). Nous avons codé nous-mêmes le déplacement des images en 
+  utilisant les événements natifs d'HTML5 (dragstart, dragover, drop).
+
+D. Lancement des vidéos (Popup interactif)
+- Source : Aide externe ponctuelle et documentation classique (MDN).
+- Fonctionnement : Pour éviter d'utiliser des formats complexes comme le 
+  JSON par manque de temps, nous passons directement les informations de 
+  la base de données (PHP) dans les paramètres de notre fonction JavaScript 
+  "onclick()". Le JS lit ces informations au clic et crée le lecteur vidéo.
+
+En vous souhaitant un agréable moment de création sur FootTier

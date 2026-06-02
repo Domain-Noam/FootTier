@@ -113,7 +113,7 @@ function RechercheTierlistsParJoueur($nomJoueur){
 //Paramètre : $pseudo le pseudo (ou partie du pseudo) recherché
 //Retourne la liste des tierlists trouvées classées par popularité
 function rechercheTierlistsParPseudo($pseudo){
-    $sql = "SELECT t.titre, u.pseudo AS createur, COUNT(lt.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS lt ON t.id_tierlist = lt.id_tierlist
+    $sql = "SELECT t.id_tierlist, t.titre, u.pseudo AS createur, COUNT(lt.id_user) AS nb_likes FROM tierlist AS t JOIN utilisateur AS u ON t.id_user = u.id_user JOIN like_tierlist AS lt ON t.id_tierlist = lt.id_tierlist
             WHERE t.est_publique = 1 AND u.pseudo LIKE '%$pseudo%'
             GROUP BY t.id_tierlist, t.titre, u.pseudo
             ORDER BY nb_likes DESC;";
@@ -173,6 +173,30 @@ function demettreAdmin($idUser) {
 
 //supprime définitivement un compte utilisateur (bannissement)
 function bannirUtilisateur($idUser) {
+    //On doit supprimer toutes les infos liés à l'utilisateur, donc d'abord on supprime les likes de l'utilisateur
+    $sql = "DELETE FROM like_tierlist WHERE id_user = '$idUser';";
+    SQLDelete($sql);
+
+    //Ensuite les commentaires écrits par l'utilisateur
+    $sql = "DELETE FROM commentaire WHERE id_user = '$idUser';";
+    SQLDelete($sql);
+
+    //Puis, on trouve et supprime le contenu des tierlists créées par cet utilisateur
+    $sql = "DELETE FROM contenu_tierlist WHERE id_tierlist IN (SELECT id_tierlist FROM tierlist WHERE id_user = '$idUser');";
+    SQLDelete($sql);
+
+    //On supprime aussi les commentaires et likes laissés par LES AUTRES utilisateurs sur les tierlists de cet utilisateur
+    $sql = "DELETE FROM like_tierlist WHERE id_tierlist IN (SELECT id_tierlist FROM tierlist WHERE id_user = '$idUser');";
+    SQLDelete($sql);
+    
+    $sql = "DELETE FROM commentaire WHERE id_tierlist IN (SELECT id_tierlist FROM tierlist WHERE id_user = '$idUser');";
+    SQLDelete($sql);
+
+    //Puis on supprime les tierlists de l'utilisateur
+    $sql = "DELETE FROM tierlist WHERE id_user = '$idUser';";
+    SQLDelete($sql);
+
+    //Enfin, on supprime l'utilisateur lui-même
     $sql = "DELETE FROM utilisateur WHERE id_user = '$idUser';";
     return SQLDelete($sql);
 }

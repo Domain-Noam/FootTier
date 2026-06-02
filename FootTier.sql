@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 01 juin 2026 à 09:16
+-- Généré le : mar. 02 juin 2026 à 18:44
 -- Version du serveur : 10.11.14-MariaDB-0ubuntu0.24.04.1
 -- Version de PHP : 8.3.6
 
@@ -41,26 +41,16 @@ CREATE TABLE `action_foot` (
 --
 
 INSERT INTO `action_foot` (`id_action`, `joueur`, `competition`, `url_media`, `id_categorie`, `url_image`) VALUES
-(1, 'Diego Maradona', 'Mexique 1986', '', 7, ''),
-(2, 'Dennis Bergkamp', 'France 1998', '', 7, ''),
-(3, 'Ronaldo R9', 'Japon-Corée 2002', '', 7, ''),
-(4, 'Kylian Mbappé', 'Russie 2018', '', 7, ''),
-(5, 'Pelé', 'Suède 1958', '', 7, ''),
-(6, 'Andrés Iniesta', 'Afrique du Sud 2010', '', 7, ''),
-(7, 'Zinedine Zidane', 'France 1998', '', 1, ''),
-(8, 'Benjamin Pavard', 'Russie 2018', '', 2, ''),
-(9, 'James Rodríguez', 'Brésil 2014', '', 2, ''),
 (10, 'Zinedine Zidane', 'France 1998', '', 1, ''),
-(11, 'Harry Kane', 'Russie 2018', '', 1, ''),
-(12, 'Ronaldinho', 'Japon-Corée 2002', '', 3, ''),
-(13, 'Kylian Mbappé', 'Russie 2018', '', 3, ''),
-(14, 'Thibaut Courtois', 'Russie 2018', '', 4, ''),
-(15, 'Iker Casillas', 'Afrique du Sud 2010', '', 4, ''),
 (16, 'Roberto Carlos', 'France 1998', '', 6, ''),
-(17, 'Xabi Alonso', 'Afrique du Sud 2010', '', 5, ''),
-(18, 'Ronaldo R9', 'France 1998', '', 10, ''),
-(19, 'Pelé', 'Mexique 1970', '', 9, ''),
-(21, 'Kylian Mbappé', 'Qatar 2022', 'ressources/medias/mbappe2022.mp4', 2, 'ressources/img/mbappe2022.jpg');
+(21, 'Kylian Mbappé', 'Qatar 2022', 'ressources/medias/mbappe2022.mp4', 2, 'ressources/img/mbappe2022.jpg'),
+(22, 'Benjamin Pavard', 'Russie 2018', 'ressources/medias/pavard2018.mp4', 2, 'ressources/img/pavard2018.jpg'),
+(23, 'Maradona', 'Espagne 1982', 'ressources/medias/maradona1982.mp4', 7, 'ressources/img/maradona1982.jpg'),
+(24, 'Thibault Courtois', 'Russie 2018', 'ressources/medias/courtois2018.mp4', 4, 'ressources/img/courtois2018.jpg'),
+(25, 'Emiliano Martinez', 'Qatar 2022', 'ressources/medias/martinez2022.mp4', 4, 'ressources/img/martinez2022.jpg'),
+(26, 'Kylian Mbappé', 'Russie 2018', 'ressources/medias/mbappe2018.mp4', 8, 'ressources/img/mbappe2018.jpg'),
+(27, 'Ronaldinho', 'Japon-Corée 2002', 'ressources/medias/ronaldinho2002.mp4', 6, 'ressources/img/ronaldinho2002.jpg'),
+(28, 'Ronaldo R9', 'France 1998', 'ressources/medias/ronaldo1998.mp4', 1, 'ressources/img/ronaldo1998.jpg');
 
 -- --------------------------------------------------------
 
@@ -108,8 +98,11 @@ CREATE TABLE `commentaire` (
 --
 
 INSERT INTO `commentaire` (`id_commentaire`, `contenu`, `date_publication`, `id_user`, `id_tierlist`) VALUES
-(1, 'Super tierlist !', '2026-04-11 08:30:00', 1, 1),
-(7, 'super !', '2026-05-29 18:15:19', 5, 1);
+(9, 'Que pensez-vous de ma tierlist ?', '2026-06-02 19:54:46', 9, 98),
+(10, 'J\\&#039;adore !', '2026-06-02 19:57:35', 10, 98),
+(11, 'Un avis ?', '2026-06-02 20:00:07', 10, 101),
+(12, 'J\\&#039;aime bien, mais l\\&#039;arrêt de Martinez ne mérite pas D', '2026-06-02 20:32:30', 8, 98),
+(13, 'Très correct', '2026-06-02 20:34:01', 8, 101);
 
 -- --------------------------------------------------------
 
@@ -128,16 +121,18 @@ CREATE TABLE `contenu_tierlist` (
 --
 
 INSERT INTO `contenu_tierlist` (`id_tierlist`, `id_action`, `tier`) VALUES
-(1, 1, 'S'),
-(1, 2, 'B'),
-(1, 3, 'B'),
-(1, 4, 'D'),
-(1, 6, 'S'),
-(1, 7, 'C'),
-(1, 9, 'A'),
-(1, 10, 'S'),
-(1, 11, 'A'),
-(1, 12, 'A');
+(98, 21, 'S'),
+(98, 22, 'S'),
+(98, 25, 'D'),
+(98, 26, 'B'),
+(99, 24, 'S'),
+(99, 25, 'D'),
+(100, 21, 'S'),
+(100, 26, 'A'),
+(101, 21, 'S'),
+(101, 22, 'A'),
+(101, 27, 'B'),
+(101, 28, 'C');
 
 -- --------------------------------------------------------
 
@@ -155,7 +150,11 @@ CREATE TABLE `like_tierlist` (
 --
 
 INSERT INTO `like_tierlist` (`id_user`, `id_tierlist`) VALUES
-(1, 1);
+(8, 98),
+(8, 101),
+(9, 98),
+(10, 98),
+(10, 101);
 
 -- --------------------------------------------------------
 
@@ -178,8 +177,16 @@ CREATE TABLE `tierlist` (
 --
 
 INSERT INTO `tierlist` (`id_tierlist`, `titre`, `est_publique`, `date_creation`, `date_modification`, `id_user`, `id_categorie`) VALUES
-(1, 'Mes buts de CDM préférés', 1, '2026-04-10 14:23:00', '2026-04-10 15:01:00', 1, NULL),
-(2, 'Mes buts de CDM préférés', 0, '2026-04-10 14:23:00', '2026-04-10 15:01:00', 7, NULL);
+(96, 'Sans titre', 0, '2026-06-02 19:45:19', '2026-06-02 19:45:19', 9, NULL),
+(97, 'Sans titre', 0, '2026-06-02 19:52:45', '2026-06-02 19:52:45', 9, NULL),
+(98, 'Allez les bleus', 1, '2026-06-02 19:53:16', '2026-06-02 19:54:28', 9, NULL),
+(99, 'Les gardiens', 0, '2026-06-02 19:55:10', '2026-06-02 19:56:21', 9, NULL),
+(100, 'Kyky', 0, '2026-06-02 19:57:49', '2026-06-02 19:58:20', 10, NULL),
+(101, 'Les meilleures actions !', 1, '2026-06-02 19:58:28', '2026-06-02 19:59:57', 10, NULL),
+(102, 'Sans titre', 0, '2026-06-02 20:00:12', '2026-06-02 20:00:12', 10, NULL),
+(103, 'Sans titre', 0, '2026-06-02 20:30:07', '2026-06-02 20:30:07', 10, NULL),
+(104, 'Sans titre', 0, '2026-06-02 20:41:12', '2026-06-02 20:41:12', 8, NULL),
+(105, 'Sans titre', 0, '2026-06-02 20:41:31', '2026-06-02 20:41:31', 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -200,9 +207,9 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id_user`, `pseudo`, `mot_de_passe`, `est_admin`, `date_inscription`) VALUES
-(1, 'admin', '$2y$10$u5QwGl3yvYG5N7E1uF3zVuVF6YHGLKl1Yd3IZoFJYbKkfH1uXOMWe', 1, '2026-05-19 09:16:16'),
-(5, 'noam', '$2y$10$ugzXLsVGCcC11syGS/0RYO74URqE3tg5j5mNn0VQ/cQhiw4VDpYDS', 0, '2026-05-26 23:24:16'),
-(7, 'admin2', '$2y$10$NCeIK6F2qx01SYPKOEzJY.q7UgacDT2kR0MuktAWS4.rEbB2no5Fi', 1, '2026-05-30 11:28:30');
+(8, 'admin', '$2y$10$PpD.cMBmrK77IiMK6QsK8.Uve6a7sPF5mtrMFOLA5ZGbhp1Zmnjay', 1, '2026-06-02 19:33:18'),
+(9, 'Adri1', '$2y$10$bZBDOzg.hKv6jPwm5b9sYOPo4uQTb8qQ5mscrQUGyxm.GYAOALSP.', 0, '2026-06-02 19:33:56'),
+(10, 'Noam', '$2y$10$csroo1FVd4JcmQqKEf/Q2e2cH2peD86EM.5bqyIQI/ocEvqSNNUCe', 0, '2026-06-02 19:34:12');
 
 --
 -- Index pour les tables déchargées
@@ -266,7 +273,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `action_foot`
 --
 ALTER TABLE `action_foot`
-  MODIFY `id_action` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_action` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `categorie`
@@ -278,19 +285,19 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `tierlist`
 --
 ALTER TABLE `tierlist`
-  MODIFY `id_tierlist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tierlist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Contraintes pour les tables déchargées

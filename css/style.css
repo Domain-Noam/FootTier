@@ -130,7 +130,7 @@ code {
     border: none; /*On retire les bords, le design rend mieux*/
     border-radius: 4px;
     padding: 16px;
-    font-weight: bold; /*On met en gras*/
+    font-weight: bold; 
     font-size: 13px;
     letter-spacing: 1px; /*Pour la même raison, on trouvait que coller cela faisait bizarre pour les lettres*/
     cursor: pointer; /*On affiche la main*/
@@ -307,7 +307,7 @@ body {
 
 /*POUR LA VUE ADMINISTRATION*/
 
-/*titre principal de la paget*/
+/*titre principal de la page*/
 .titre-principal {
     color: #2c166d;
     font-weight: bold;
@@ -330,15 +330,15 @@ body {
     margin-bottom: 20px;
 }
 
-/*le fond blanc pour le formulaire d'ajout */
+/*le fond blanc pour le formulaire d'ajout*/
 .fond-blanc-form {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
 }
 
-/*design des tableaux*/
-.table-admin {
+/*Pour le design des tableaux*/
+.tableAdmin {
     background-color: #ffffff;
     border-radius: 10px;
     overflow: hidden;
@@ -364,7 +364,7 @@ body {
 }
 
 /*classes pour arrondir les petits boutons d'action*/
-.btn-arrondi {
+.btnArrondi {
     border-radius: 10px;
     font-weight: bold;
     padding: 3px 10px;
@@ -377,7 +377,7 @@ body {
 
 /*POUR LA VUE GALERIE*/
 
-/*le bloc de la barre de recherche*/
+/*Pour le bloc de la barre de recherche*/
 .rechercheGalerie {
     margin-top: 20px;
     margin-bottom: 40px;
@@ -389,7 +389,7 @@ body {
     border: none;
 }
 
-/*style appliqué au menu déroulant généré par mkSelect*/
+/*Pour le menu déroulant*/
 .rechercheGalerie select {
     border-radius: 10px;
     height: 40px;
@@ -408,7 +408,7 @@ body {
     height: 40px;
 }
 
-/*les cartes individuelles des tierlists*/
+/*Pour les cartes individuelles des tierlists*/
 .colonneCarte {
     margin-bottom: 30px;
 }
@@ -426,7 +426,7 @@ body {
     margin-bottom: 15px;
 }
 
-/*ses informations sous l'image (likes, titre, auteur)*/
+/*Pour ses informations sous l'image (likes, titre, auteur)*/
 .infosTierlist {
     display: flex;
     justify-content: space-between;
@@ -450,7 +450,6 @@ body {
     white-space: nowrap;
     margin-left: 10px;
 }
-
 
 a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions que d'aller chercher l'attribut href pour enlever le lien sous les lettres*/
     text-decoration: none;
@@ -491,7 +490,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     border-radius: 8px;
 }
 
-/*les lignes de couleur de la petite tierlist*/
+/*Pour les lignes de couleur de la petite tierlist*/
 .PetiteLigne {
     display: flex;
     align-items: center;
@@ -501,6 +500,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     background-color: #1a1a1a; 
 }
 
+/*Pour l'affichage des lettres*/
 .labelS, .labelA, .labelB, .labelC, .labelD {
     width: 25px;
     height: 100%;
@@ -512,14 +512,13 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     font-size: 10px;
 }
 
-/*couleurs des tiers */
 .tierS, .tierA, .tierB, .tierC, .tierD {
     flex:1;
-    opacity:0.6;
     height:100%;
     margin-left:2px;
 }
 
+/*Pour les couleurs des tiers */
 .tierS {
     background-color: #c0392b;
 }
@@ -536,7 +535,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     background-color: #2980b9;
 }
 
-/*la partie droite de la carte (texte + boutons)*/
+/*Pour la partie droite de la carte (texte + boutons)*/
 .infosDuBrouillon {
     flex: 1;
     display: flex;
@@ -550,9 +549,9 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 5px;
-    white-space: nowrap; /* on force le texte à rester sur une seule ligne */
-    overflow: hidden; /* cache tout le texte qui dépasse des bords de la petite carte */
-    text-overflow: ellipsis; /* ajoute ... à la fin pour montrer que le texte est coupé mais qu'il en reste */
+    white-space: nowrap; /*on force le texte à rester sur une seule ligne*/
+    overflow: hidden; /*ça cache tout le texte qui dépasse des bords de la petite carte*/
+    text-overflow: ellipsis; /*ajoute ... à la fin pour montrer que le texte est coupé mais qu'il en reste*/
 }
 
 .dateDuBrouillon {
@@ -573,14 +572,11 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
 }
 
 
-
 /*POUR LA VUE DETAIL_TIERLIST*/
-
 
 .grandeDiv {
     padding: 10px 10px;
 }
-
 
 .sousDivGD {
     display: flex;
@@ -650,7 +646,6 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
 .detailVignette img {
     width: 100%;
     height: 100%;
-    /*object-fit: cover;*/
 }
 
 .pasVignette {
@@ -674,7 +669,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
     padding: 0;
-    /*line-height: 1;*/
+    line-height: 1;
 }
 
 #coeur:disabled {
@@ -742,7 +737,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     margin-left: auto;
 }
 
-/*Le champ titre de la tierlist*/
+/*Pour le champ titre de la tierlist*/
 .inputTitre {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.4);
@@ -758,7 +753,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
 }
 
 .inputTitre:focus {
-    outline: none; /*N'agit pas sur les bords, mais sur les contours*/
+    outline: none; /*Ça n'agit pas sur les bords, mais sur les contours, donc différent de border*/
     border-color: rgba(255,255,255,0.7);
 }
 
@@ -846,12 +841,12 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
     color: #ffffff;
 }
 
-/* Zone qui reçoit les vignettes par drag & drop */
+/*Zone qui reçoit les vignettes par drag & drop*/
 .zoneDepot {
     flex: 1;
     background-color: rgba(0,0,0,0.3);
     display: flex;
-    flex-wrap: wrap;  /*Les vignettes passent à la ligne si besoin*/
+    flex-wrap: wrap;  /*Les vignettes passent à la ligne selon la taille de la bibliothèque d'action*/
     gap: 4px;
     padding: 4px 6px;
     align-items: center;
@@ -1032,8 +1027,7 @@ a[href*="view=detail_tierlist"]{ /*Nous n'avons pas trouvé d'autres solutions q
 #divPourVideo video, #divPourVideo img {
     max-width: 100%; 
     max-height: 400px; 
-    border-radius: 5px; 
-    object-fit: contain;
+    border-radius: 5px;
 }
 
 .infosCulturelles {

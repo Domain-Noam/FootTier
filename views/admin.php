@@ -62,12 +62,12 @@ $actions = getActions();
                             <td class="text-center align-middle">
                                 <?php 
                                 if($estAdmin == 0){
-                                    mkLien("controleur.php", "Promouvoir Admin", "action=Promouvoir&id_user=$idUser", "class=\"btn btn-xs btn-success btn-arrondi\"");
+                                    mkLien("controleur.php", "Promouvoir Admin", "action=Promouvoir&id_user=$idUser", "class=\"btn btn-xs btn-success btnArrondi\"");
                                 }
                                 else{
-                                    mkLien("controleur.php", "Rétrograder", "action=Demettre&id_user=$idUser", "class=\"btn btn-xs btn-warning btn-arrondi\"");
+                                    mkLien("controleur.php", "Rétrograder", "action=Demettre&id_user=$idUser", "class=\"btn btn-xs btn-warning btnArrondi\"");
                                 } 
-                                mkLien("controleur.php", "Bannir", "action=Bannir&id_user=$idUser", "class=\"btn btn-xs btn-danger btn-arrondi\" onclick=\"return confirm('Bannir ce membre ?');\""); 
+                                mkLien("controleur.php", "Bannir", "action=Bannir&id_user=$idUser", "class=\"btn btn-xs btn-danger btnArrondi\" onclick=\"return confirm('Bannir ce membre ?');\""); 
                                 ?>
                             </td>
                         </tr>
@@ -164,7 +164,7 @@ $actions = getActions();
     <h3 class="titreDivs">Gérer les actions existantes</h3>
     
     <div class="table-responsive">
-        <table class="table table-striped table-hover table-admin">
+        <table class="table table-striped table-hover tableAdmin">
             <thead>
                 <tr class="tr-entete">
                     <th>Vignette</th>
@@ -192,7 +192,7 @@ $actions = getActions();
                             <td class="align-middle"><?php echo $compet;?></td>
                             <td class="align-middle"><span class="label label-default" style="background-color: #79808d;"><?php echo $type; ?></span></td>
                             <td class="text-center align-middle">
-                                <?php mkLien("controleur.php", "Supprimer", "action=SupprimerAction&id_action=$idAction", "class=\"btn btn-xs btn-danger btn-arrondi\" onclick=\"return confirm('Supprimer définitivement cette action ?');\""); ?>
+                                <?php mkLien("controleur.php", "Supprimer", "action=SupprimerAction&id_action=$idAction", "class=\"btn btn-xs btn-danger btnArrondi\" onclick=\"return confirm('Supprimer définitivement cette action ?');\""); ?>
                             </td>
                         </tr>
                         <?php
