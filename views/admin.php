@@ -154,7 +154,7 @@ $actions = getActions();
         </div>
 
         <div class="text-right" style="margin-top: 20px;">
-            <?php mkInput("submit", "btn_ajouter", "Ajouter l'action", "class=\"btn btn-primary btnValider\"");?>
+            <input type="submit" name="action" value="AjouterAction" class="btn btn-primary btnValider">
         </div>
         <?php endForm();?>
     </div>

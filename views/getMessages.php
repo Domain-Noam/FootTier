@@ -3,6 +3,7 @@ session_start();
 
 include_once("../librairies/maLibUtils.php");
 include_once("../librairies/modele.php");
+include_once("../librairies/maLibSecurisation.php");
 
 securiser('index.php?view=connexion');
 

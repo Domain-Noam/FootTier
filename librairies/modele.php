@@ -328,7 +328,7 @@ function getTierlistPourEdition($idTierlist, $idUser){
 
 //Récupère toutes les actions de la bibliothèque qui ne sont pas encore placées dans la tierlist
 function getActionsRestantes($idTierlist){
-    $sql = "SELECT af.id_action, af.joueur, af.competition, af.url_image, c.nom_categorie FROM action_foot AS af
+    $sql = "SELECT af.id_action, af.joueur, af.competition, af.url_image, af.url_media, c.nom_categorie FROM action_foot AS af
             JOIN categorie AS c ON af.id_categorie = c.id_categorie
             WHERE af.id_action NOT IN (SELECT ct.id_action FROM contenu_tierlist AS ct WHERE ct.id_tierlist = $idTierlist)
             ORDER BY c.nom_categorie ASC, af.joueur ASC;";

@@ -1,3 +1,7 @@
+/*Ce fichier JS possède tout notre JS de tout notre site*/
+
+/*POUR LES VUES CONNEXION ET INSCRIPTION*/
+
 window.onload = function(){ //On attend que TOUT le HTML soit chargé dans le navigateur avant de lancer le script JS
     var bouton=document.getElementById("bouton");
     var pseudoInput=document.getElementById("pseudo");
@@ -45,6 +49,9 @@ window.onload = function(){ //On attend que TOUT le HTML soit chargé dans le na
     verifForm(); //On lance une première vérification automatique
 };
 
+
+/*POUR LA VUE BROUILLON*/
+
 //intercepte le clic et affiche une alerte de confirmation
 function confirmerSuppression(event, msg) {
     if (!window.confirm(msg)) {
@@ -53,6 +60,9 @@ function confirmerSuppression(event, msg) {
     }
     return true; //laisse passer le clic si l'utilisateur dit "OK"
 }
+
+
+/*POUR LA VUE DETAIL_TIERLIST*/
 
 //Fonction pour passer le coeur en rouge quand l'utilisateur clique dessus
 function coeurRouge(){
@@ -83,10 +93,16 @@ function coeurRouge(){
 //Pour mieux comprendre la différence compliqué entre drop et dragend : drop s'occupe de la destination, tandis que dragend s'occupe de l'objet déplacé
 
 var idActionEnCours = null; //C'est une variable globale pour stocker l'id de la vignette en cours de déplacement
-var zoneOrigine     = null; //La zone depuis laquelle elle part
+var zoneOrigine = null; //La zone depuis laquelle elle part
+var estEnDrag = false;
 
 //Se déclenche quand l'utilisateur commence à faire glisser une vignette, on utilise dragend quand on relâche
 function commencerGlisser(event){
+    estEnDrag = true;
+    setTimeout(function(){
+        estEnDrag = false;
+    }, 100);
+
     idActionEnCours = event.currentTarget.dataset.idAction; // On stocke l'id de l'action dans dataTransfer pour le récupérer au drop
     event.dataTransfer.setData("text/plain", idActionEnCours); //Capture l'id de l'action avec dataTransfer
     event.dataTransfer.effectAllowed = "move"; //Le curseur "déplacement"
@@ -193,5 +209,49 @@ document.addEventListener("DOMContentLoaded", function(){ //On retire le survol 
 });
 
 
+/*TOUJOURS POUR LA VUE DE CRÉATION DE TIERLIST MAIS POUR LE POPUP DES VIDÉOS*/
 
+//La fonction suivante se déclange au moment du "click", pour faire la distinction avec le moment du ondragstart
+function ouvrirPopupVideo(element){
+    if(estEnDrag){
+        return;
+    }
+
+    //On récupérère les données stockées dans les attributs "data-"
+    var joueur = element.getAttribute("data-joueur");
+    var competition = element.getAttribute("data-competition");
+    var categorie = element.getAttribute("data-categorie");
+    var media = element.getAttribute("data-media"); 
+    var image = element.getAttribute('data-image'); 
+    //On met le contenu des variables dans le popup
+    document.getElementById('nomJoueur').textContent = joueur;
+    document.getElementById('nomCompetition').textContent = competition;
+    document.getElementById('nomCategorie').textContent = categorie;
+
+    //On gère l'affichge de la vidéo 
+    var conteneurMedia = document.getElementById("divPourVideo");
+    conteneurMedia.innerHTML = ""; // On initialise la zone
+
+    if(media && media.trim() !== ""){
+        var video = document.createElement("video"); 
+        video.src = media;
+        video.controls = true; 
+        video.autoplay = true; 
+        conteneurMedia.appendChild(video); 
+    } 
+    else if(image && image.trim() !== ""){
+        var img = document.createElement("img"); 
+        img.src = image;
+        img.alt = joueur;
+        conteneurMedia.appendChild(img); 
+    }
+
+    document.getElementById("popupVideo").style.display = "flex";
+}
+
+//Pour fermer le popup avec la croix 
+function fermerPopupVideo(){
+    document.getElementById('popupVideo').style.display = "none";
+    document.getElementById('divPourVideo').innerHTML = "";  //On vide le contenu pour que la video disparaisse
+}
 

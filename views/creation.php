@@ -95,15 +95,16 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                     if(!empty($contenuParTier[$tier])){
                         foreach($contenuParTier[$tier] as $vignette){
                             //On reprend le brouillon s'il n'est pas vide et on place les vignettes déjà mises 
-                            echo '<div class="vignetteCreation" draggable="true" id="vignette-' . $vignette["id_action"] . '" data-id-action="' . $vignette["id_action"] . '" ondragstart="commencerGlisser(event)">';
-                            if(!empty($vignette["url_image"])){
-                                echo "<img src=\"" . htmlspecialchars($vignette["url_image"]) . "\" alt=\"" . htmlspecialchars($vignette["joueur"]) . "\">";
-                            }
-                            else{
-                                echo "<div class=\"vignetteVide\"></div>";
-                            }
-                            echo "<p class=\"labelVignette\">" . htmlspecialchars($vignette["joueur"]) . "</p>";
-                            echo "</div>";
+                            $idAction = $vignette["id_action"];
+                            $joueur = isset($vignette["joueur"]) ? htmlspecialchars($vignette["joueur"]) : '';
+                            $competition = isset($vignette["competition"]) ? htmlspecialchars($vignette["competition"]) : '';
+                            $categorie = isset($vignette["nom_categorie"]) ? htmlspecialchars($vignette["nom_categorie"]) : '';
+                            $image = isset($vignette["url_image"]) ? htmlspecialchars($vignette["url_image"]) : '';
+                            $media = isset($vignette["url_media"]) ? htmlspecialchars($vignette["url_media"]) : '';
+                            //On utilise "data-" car c'est, selon nos recherches, la bonne pratique 
+                            echo "<div class=\"vignetteCreation\" draggable=\"true\" id=\"vignette-" . $idAction . "\" data-id-action=\"" . $idAction . "\" 
+                                data-joueur=\"" . $joueur . "\" data-competition=\"" . $competition . "\" data-categorie=\"" . $categorie . "\" data-image=\"" . $image . "\"  
+                                data-media=\"" . $media . "\" ondragstart=\"commencerGlisser(event)\" onclick=\"ouvrirPopupVideo(this)\"></div>";
                         }
                     }
                     echo "</div>"; //fin de la div zoneDepot
@@ -119,7 +120,15 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
                 <?php 
                 if(!empty($actionsDispo)){
                     foreach($actionsDispo as $action){
-                        echo "<div class=\"vignetteCreation vignetteBiblio\" draggable=\"true\" id=\"vignette-" . $action["id_action"] . "\" data-id-action=\"" . $action["id_action"] . "\" ondragstart=\"commencerGlisser(event)\">";
+                        $idAction = $action["id_action"];
+                        $joueur = isset($action["joueur"]) ? htmlspecialchars($action["joueur"]) : '';
+                        $competition = isset($action["competition"]) ? htmlspecialchars($action["competition"]) : '';
+                        $categorie = isset($action["nom_categorie"]) ? htmlspecialchars($action["nom_categorie"]) : '';
+                        $image = isset($action["url_image"]) ? htmlspecialchars($action["url_image"]) : '';
+                        $media = isset($action["url_media"]) ? htmlspecialchars($action["url_media"]) : '';
+                        echo "<div class=\"vignetteCreation vignetteBiblio\" draggable=\"true\" id=\"vignette-" . $idAction . "\" data-id-action=\"" . $idAction . "\" 
+                            data-joueur=\"" . $joueur . "\" data-competition=\"" . $competition . "\" data-categorie=\"" . $categorie . "\" data-image=\"" . $image . "\" 
+                            data-media=\"" . $media . "\" ondragstart=\"commencerGlisser(event)\" onclick=\"ouvrirPopupVideo(this)\">";
                         if(!empty($action["url_media"])){
                             //Vidéo de l'action (mp4 stocké localement dans notre répertoire /ressources)
                             //Grâce à autoplay, muted et loop, la vidéo tourne en boucle silencieusement
@@ -157,6 +166,24 @@ $couleurs = ["S"=>"#e72925", "A"=>"#e47e01", "B"=>"#b69b02", "C"=>"#4aaf4f", "D"
         <!--Champs hidden générés par synchroniserFormulaire(), juste avant la soumission du formulaire, donc c'est en JS que l'on s'occupe de cette div-->
         <div id="champsHidden"></div>
     </form>
+
+    <div id="popupVideo" class="popupPourVideo">
+        <div class="contenuPopup">
+            <p class="boutonFermer" onclick="fermerPopupVideo()">x</p>
+            <div id="divPourVideo"></div>
+            <div class="infosCulturelles">
+                <h3 id="nomJoueur"></h3>
+                <p>
+                    <p id="souligne">Compétition :</p>
+                    <p id="nomCompetition"></p>
+                </p>
+                <p>
+                    <p id="souligne">Type d'action :</p>
+                    <p id="nomCategorie"></p>
+                </p>
+            </div>
+        </div>
+    </div>
 
 </div>
 

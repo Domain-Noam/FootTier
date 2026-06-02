@@ -20,9 +20,9 @@ $brouillons = getBrouillonsUtilisateur($idUser); //appel de la fonction pour ré
     <?php
     if($brouillons != false){
         foreach($brouillons as $brouillon){
-            $idTierlist = $brouillon['id_tierlist']; 
+            $idTierlist = $brouillon["id_tierlist"]; 
             $titre = htmlspecialchars($brouillon['titre']);
-            $dateModif = htmlspecialchars($brouillon['date_modification']);
+            $dateModif = htmlspecialchars($brouillon["date_modification"]);
             ?>
             
             <div class="col-md-4">
